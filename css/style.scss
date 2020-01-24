@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow|Ubuntu&display=swap');
+
+$color-bg-main: hsl(39, 58%, 95%);
+$color-bg-nav: hsl(0, 60%, 34%);
+$color-font-side-nav: hsl(0, 20%, 14%);
+$neon-color1: hsl(0, 20%, 14%);
+$neon-color2: hsl(0, 90%, 54%);
+
+$font-main: 'PT Sans Narrow', Helvetica, Arial, Sans-serif;
+$font-heading: 'Ubuntu', Helvetica, Arial, Sans-serif;
+
+@mixin calculateWidthProducts($columns, $margin)
+{
+    width: (100% - (($columns - 1) * $margin)) / $columns;
+
+    &:nth-child(n)
+    {
+        margin-right: $margin;
+        margin-bottom: $margin;
+    }
+
+    &:nth-child(#{$columns}n)
+    {
+        margin-right: 0;
+        // margin-bottom: 0;
+    }
+}
+
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    display: flex;
+    width: 80%;
+    margin: auto;
+    font-family: $font-main;
+
+    &.light
+    {
+        background-color: $color-bg-main;
+    }
+
+    &.dark
+    {
+        background-color: darken($color-bg-main, 15%);
+    }
+}
+
+.side
+{
+    display: flex;
+    flex-direction: column;
+    padding: 4vh 1vw 0 0;
+    width: 25%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+
+    img
+    {
+        margin-bottom: 4vh;
+    }
+
+    ul
+    {
+        list-style-type: none;
+
+        li
+        {
+            display: block;
+            padding: 2vh 0;
+        }
+
+        a
+        {
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: $color-font-side-nav;
+        }
+    }
+}
+
+.top
+{
+    background-image: linear-gradient(scale-color($color-bg-nav, $lightness:50%), $color-bg-nav);
+    color: $color-bg-main;
+    width: 100%;
+
+    ul
+    {
+        text-decoration: none;
+        display: flex;
+        width: 100%;
+        align-items: center;
+
+        li
+        {
+            display: inline-block;
+
+            &.menuright
+            {
+                justify-self: flex-end;
+            }
+
+            a
+            {
+                text-decoration: none;
+                color: $color-bg-main;
+            }
+        }
+
+        img
+        {
+            opacity: 0.5;
+            width: 2vw;
+            fill: white;
+        }
+    }
+}
+
+header
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    
+    // img
+    // {
+    //     // width: 100%;
+    // }
+
+    p
+    {
+        position: absolute;
+        top: 55%;
+        text-align: center;
+        display: block;
+        line-height: 5rem;
+        font-family: $font-heading;
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: $color-bg-main;
+        // background-color: rgba($color-bg-main, .7);
+
+        &.neon {
+            text-shadow:
+                -2px -2px 10px $neon-color1,
+                2px 2px 20px $neon-color1,
+                0 0 40px $neon-color2,
+                0 0 70px $neon-color2,
+                0 0 80px $neon-color2,
+                0 0 100px $neon-color2;
+        }
+    }
+
+}
+
+main
+{
+    h1
+    {
+        font-family: $font-heading;
+        color: $neon-color1;
+        padding: 5vh 0;
+    }
+
+    font-size: 1.3rem;
+}
+
+section
+{
+    img
+    {
+        width: 300px;
+    }
+
+    .products
+    {
+       display: flex;
+       flex-direction: row;
+       flex-wrap: wrap; 
+
+        article
+        {
+            @include calculateWidthProducts(3, 2%);
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+
+            p
+            {
+                flex: 1 1 100%;
+            }
+       
+            img
+            {
+                align-self: center;
+            }
+        }
+
+        h3
+        {
+            font-size: 1.8rem;
+        }
+
+        button
+        {
+            background: linear-gradient(scale-color($color-bg-nav, $lightness:50%), $color-bg-nav);
+            padding: 1vw 0;
+            vertical-align: bottom;
+        }
+    }
+}
+
+.products
+{
+    article
+    {
+        img, h3, p
+        {
+            margin: 3%;
+        }
+    }
+}
