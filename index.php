@@ -30,6 +30,19 @@
             echo "dark";
         }
     ?>">
+
+    <nav class="top">
+        <ul>
+            <li><a href="#"><img src="img/facebookIcon-bw.png" alt="Facebook logo"></a></li>
+            <li><a href="#"><img src="img/instagramIcon-bw.png" alt="Instagram logo"></a></li>
+            <li><a href="#"><img src="img/twitterIcon-bw.png" alt="Twitter logo"></a></li>
+            <li><a href="#"><img src="img/youtubeIcon-bw.png" alt="YouTube logo"></a></a></li>
+            <li><a href="#">Min konto</a></li>
+            <li class="carticon"><a href="#"><img src="img/shopping-cart-solid.svg" alt="shopping cart icon"></a></li>
+            <li><a href="#">Min kurv</a></li>
+        </ul>
+    </nav>
+
     <nav class="side">
         <img src="img/edea-skates-logo.png" alt="Edea logo">
         <ul>
@@ -43,32 +56,23 @@
     </nav>
     
     <div class="content">
-        <header>
-        <nav class="top">
-            <ul>
-                <li><a href="#"><img src="img/facebook-brands.svg" alt="Facebook logo"></a></li>
-                <li><a href="#"><img src="img/instagram-brands.svg" alt="Instagram logo"></a></li>
-                <li><a href="#"><img src="img/twitter-brands.svg" alt="Twitter logo"></a></li>
-                <li><a href="#"><img src="img/youtube-brands.svg" alt="YouTube logo"></a></a></li>
-                <li class="menuright"><a href="#">Min konto</a></li>
-                <li class="menuright"><a href="#">Min kurv</a></li>
-            </ul>
-        </nav>
-            <img src=
-            <?php
-                if ($currentMonth < 7)
-                {
-                    echo "'img/edea-ice-skate-collection-2018.jpg' alt='Edea ice skate collection'";
-                }
-                else
-                {
-                    echo "'img/edea-home-of-champions.jpg' alt='Edea home of champions skate'";
-                }
-            ?>>
 
-            <p class="neon">Det er <?php echo $month[floor($currentMonth) -1];?> og dermed <?php echo $season[floor($currentMonth/3)] . $seasonText[floor($currentMonth/3)];?></p>
+        <header class="
+            <?php
+                 if ($currentMonth < 7)
+                 {
+                     echo "spring";
+                 }
+                 else
+                 {
+                     echo "fall";
+                 }
+            ?>
+        ">
+
+        <p class="neon">Det er <?php echo $month[floor($currentMonth) -1];?> og dermed <?php echo $season[floor($currentMonth/3)] . $seasonText[floor($currentMonth/3)];?></p>
         </header>
-        
+
         <main>
             <h1>Edea støvler - høj kvalitet til top præstationer!</h1>
         

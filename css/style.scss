@@ -22,7 +22,6 @@ $font-heading: 'Ubuntu', Helvetica, Arial, Sans-serif;
     &:nth-child(#{$columns}n)
     {
         margin-right: 0;
-        // margin-bottom: 0;
     }
 }
 
@@ -35,6 +34,7 @@ $font-heading: 'Ubuntu', Helvetica, Arial, Sans-serif;
 body
 {
     display: flex;
+    flex-direction: column;
     width: 80%;
     margin: auto;
     font-family: $font-main;
@@ -54,15 +54,17 @@ body
 {
     display: flex;
     flex-direction: column;
-    padding: 4vh 1vw 0 0;
-    width: 25%;
     height: 100vh;
+    width: 190px;
     position: fixed;
-    top: 0;
+    padding: 10px;
+    top: 50px;
+    background-color: hsla(0, 0%, 100%, .6);
 
     img
     {
         margin-bottom: 4vh;
+        width: 100%;
     }
 
     ul
@@ -77,6 +79,7 @@ body
 
         a
         {
+            font-size: 1.4rem;
             text-decoration: none;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -86,11 +89,23 @@ body
     }
 }
 
+.content
+{
+    margin-left: 220px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 50px;
+}
+
 .top
 {
     background-image: linear-gradient(scale-color($color-bg-nav, $lightness:50%), $color-bg-nav);
     color: $color-bg-main;
-    width: 100%;
+    width: inherit;
+    height: 50px;
+    position: fixed;
+    z-index: 10;
 
     ul
     {
@@ -102,44 +117,64 @@ body
         li
         {
             display: inline-block;
+            padding: 0 0.5vw;
 
-            &.menuright
+            &:nth-child(4)
             {
-                justify-self: flex-end;
+                margin-right: auto;
             }
 
             a
             {
                 text-decoration: none;
                 color: $color-bg-main;
+                font-size: 1.2rem;
+            }
+
+            &:last-child
+            {
+                padding-left: 0;
             }
         }
 
         img
         {
             opacity: 0.5;
+            padding-top: 5px;
             width: 2vw;
             fill: white;
+        }
+
+       
+
+        .carticon
+        {
+            img
+            {
+                transform: scale(.8);
+                
+            }
+            padding-right: 0.3vw;
         }
     }
 }
 
 header
 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    
-    // img
-    // {
-    //     // width: 100%;
-    // }
+    &.spring
+    {
+        background: url('../img/edea-ice-skate-collection-2018.jpg') top left 100%;
+    }
 
+    &.fall
+    {
+        background: url('../img/edea-home-of-champions.jpg') top left 100%;
+    }
+    
     p
     {
-        position: absolute;
-        top: 55%;
+        
+        padding: 13vh 0;
         text-align: center;
         display: block;
         line-height: 5rem;
@@ -147,7 +182,6 @@ header
         font-size: 1.8rem;
         font-weight: 800;
         color: $color-bg-main;
-        // background-color: rgba($color-bg-main, .7);
 
         &.neon {
             text-shadow:
@@ -176,6 +210,13 @@ main
 
 section
 {
+    margin-top: 4vh; 
+
+    h2
+    {
+        padding-bottom: 2vh;
+    }
+
     img
     {
         width: 300px;
