@@ -1,4 +1,16 @@
 <?php
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    }
+
+    if(isset($_POST))
+    {
+        $_SESSION = $_POST;
+
+        $_POST = [];
+    }
+
     $currentMonth = date("m");
     $currentMinute = date("i");
     $month = array("januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december");
@@ -31,29 +43,13 @@
         }
     ?>">
 
-    <nav class="top">
-        <ul>
-            <li><a href="#"><img src="img/facebookIcon-bw.png" alt="Facebook logo"></a></li>
-            <li><a href="#"><img src="img/instagramIcon-bw.png" alt="Instagram logo"></a></li>
-            <li><a href="#"><img src="img/twitterIcon-bw.png" alt="Twitter logo"></a></li>
-            <li><a href="#"><img src="img/youtubeIcon-bw.png" alt="YouTube logo"></a></a></li>
-            <li><a href="#">Min konto</a></li>
-            <li class="carticon"><a href="#"><img src="img/shopping-cart-solid.svg" alt="shopping cart icon"></a></li>
-            <li><a href="#">Min kurv</a></li>
-        </ul>
-    </nav>
+    <?php 
+        include "includes/topmenu.php";
 
-    <nav class="side">
-        <img src="img/edea-skates-logo.png" alt="Edea logo">
-        <ul>
-            <li><a href="#">Forside</a></li>
-            <li><a href="#">Shop</a></li>
-            <li><a href="#">Garanti</a></li>
-            <li><a href="#">Om os</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Opret bruger</a></li>
-        </ul>
-    </nav>
+        include "includes/sidemenu.php";
+    ?>
+
+    
     
     <div class="content">
 
@@ -75,7 +71,6 @@
 
         <main>
             <h1>Edea støvler - høj kvalitet til top præstationer!</h1>
-        
             <section>
                 <article>
                     <p>Kunstskøjteløbere har altid flyttet grænser, og de ønsker den nyeste teknologi til at hjælpe dem med dette. 
@@ -159,6 +154,11 @@
                 </div class="products">
             </section>
         </main>
+
+        <?php include "includes/footer.php"; ?>
+
     </div class="content">
+
+
 </body>
 </html>
