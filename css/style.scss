@@ -320,12 +320,7 @@ footer
             
         }
 
-        label
-        {
-            width: 30%;
-            display: inline-block;
-            
-        }
+        
 
         
     }
@@ -346,21 +341,46 @@ footer
 
 form
 {
+    p
+    {
+        line-height: 40px;
+    }
+    label
+    {
+        width: 30%;
+        display: inline-block;
+
+        &.loginform
+        {
+            width: 130px;
+        }
+        
+    }
     input
         {
             display: inline-block;
             width: 60%;
-            height: 2vh;
+            height: 20px;
             padding-left: 3px;
+        }
+
+        .logininput
+        {
+            width: 250px;
         }
 
         .submitbtn
         {
-            width: 30%;
+            width: 100px;
             margin-left: 30%;
             padding-left: 0;
-            height: 3vh;
+            height: 20px;
             border-radius: 50px;
             cursor: pointer;
+        }
+
+        .loginbtn
+        {
+            margin-left: 0;
         }
 }

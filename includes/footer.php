@@ -39,7 +39,7 @@
             </p>
             
             <p>
-                <input type="submit" name="submit-newsletter" value="Tilmeld" class="newsletterbtn">
+                <input type="submit" name="submit-newsletter" value="Tilmeld" class="submitbtn">
             </p>
         </form>
 

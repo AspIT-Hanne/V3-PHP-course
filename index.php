@@ -1,15 +1,5 @@
 <?php
-    if(!isset($_SESSION)) 
-    { 
-        session_start(); 
-    }
-
-    if(isset($_POST))
-    {
-        $_SESSION = $_POST;
-
-        $_POST = [];
-    }
+    session_start(); 
 
     $currentMonth = date("m");
     $currentMinute = date("i");

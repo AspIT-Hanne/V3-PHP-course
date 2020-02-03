@@ -1,8 +1,8 @@
 <?php
-    session_start();
-    session_unset();
-    session_destroy();
-    $_SESSION = array();
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    }
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>Logout</title>
+    <title>Login</title>
 </head>
 <body>
 
@@ -24,9 +24,12 @@
 
     <div class="content">
         <main>
-            <h1>Logout</h1>
+        <h1>Brugeren er allerede oprettet</h1>
+        
+        <p>Du kan logge ind nedenfor:</p>
 
-            <p>Du er nu logget ud!</p>
+        <?php include "login-form.php"; ?>
+
         </main>
 
         <?php include "includes/footer.php"; ?>
