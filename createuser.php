@@ -103,8 +103,8 @@
             }
             else if ($result->num_rows == 0)
             { 
-                if($db->query("INSERT INTO edeausers (Username, Password, Firstname, Lastname, Address, Postcode, Country, Email) VALUE ('".$_POST['newuser-username']."', '".$_POST['newuser-password']."', '".$_POST['newuser-firstname']."', '".$_POST['newuser-lastname']."'
-                , '".$_POST['newuser-address']."', '".$_POST['newuser-postcode']."', '".$_POST['newuser-country']."', '".$_POST['newuser-email']."')"))
+                if($db->query("INSERT INTO edeausers (Username, Password, Firstname, Lastname, Address, Postcode, Country, Email, Website) VALUE ('{$_POST['newuser-username']}', '{$_POST['newuser-password']}', '{$_POST['newuser-firstname']}', '{$_POST['newuser-lastname']}'
+                , '{$_POST['newuser-address']}', '{$_POST['newuser-postcode']}', '{$_POST['newuser-country']}', '{$_POST['newuser-email']}', '{$_POST['newuser-website']}')"))
                 {
                     header("Location: newuser-landing.php");
                 }
