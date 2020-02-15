@@ -1,7 +1,11 @@
 {
 	"folders": [
 		{
+<<<<<<< HEAD
 			"path": "."
+=======
+			"path": "C:\\Users\\halu\\code\\php"
+>>>>>>> 0dce9d6c4e4174360b109bc62d84b2b5bf4a09e7
 		}
 	]
 }
