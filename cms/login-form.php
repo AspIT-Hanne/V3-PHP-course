@@ -45,11 +45,8 @@
                 $row = $result->fetch_assoc();
                 if ($row['Password'] == $_POST['login-password'])
                 {
-                    $_SESSION["login-submit"] = $_POST["login-submit"]; ?>
-                    <pre><?php print_r($db); ?></pre>
-                    <pre><?php print_r($result);?></pre>
-                    <?php
-                    // header("Location: index.php");
+                    $_SESSION["login-submit"] = $_POST["login-submit"];
+                    header("Location: index.php");
                 }
                 else
                 {

@@ -5,11 +5,10 @@
     $currentMinute = date("i");
     $month = array("januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december");
     $season = array("vinter", "forår", "sommer", "efterår");
-    $seasonText = array(
-        ". <br>Er dine skøjter helt up-to-date til sæsonens sidste konkurrencer?", 
-        ". <br>Skal du have nye skøjter klar til næste sæsons programmer?",
-        ". Off-ice træning er i fuld gang.<br> Vidste du, at vi også sælger in-line rulleskøjtehjul til at sætte under dine Edea støvler?",
-        ". Er du kommet godt i gang med sæsonen?<br> Er dine skøjter klar til de første konkurrencer?");
+    $seasonText = array("<br>Er dine skøjter helt up-to-date til sæsonens sidste konkurrencer?", 
+        "<br>Skal du have nye skøjter klar til næste sæsons programmer?",
+        "Off-ice træning er i fuld gang.<br> Vidste du, at vi også sælger in-line rulleskøjtehjul til at sætte under dine Edea støvler?",
+        "Er du kommet godt i gang med sæsonen?<br> Er dine skøjter klar til de første konkurrencer?");
 ?>
 
 <!DOCTYPE html>
@@ -141,13 +140,13 @@
                         <p>Pris: 1.175,-</p>
                         <button>Køb nu!</button>
                     </article>
-                </div class="products">
+                </div>
             </section>
         </main>
 
         <?php include "includes/footer.php"; ?>
 
-    </div class="content">
+    </div>
 
 
 </body>

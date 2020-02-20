@@ -114,7 +114,7 @@
             }
             else if ($result->num_rows == 0)
             { 
-                if($db->query("INSERT INTO edeausers (Username, Password, Firstname, Lastname, Address, Postcode, Country, Email, Website) VALUE ('{$_POST['newuser-username']}', '{$_POST['newuser-password']}', '{$_POST['newuser-firstname']}', '{$_POST['newuser-lastname']}'
+                if($db->query("INSERT INTO edeausers (Username, Password, Priviledge, Firstname, Lastname, Address, Postcode, Country, Email, Website) VALUE ('{$_POST['newuser-username']}', '{$_POST['newuser-password']}', '{$_POST['newuser-priviledge']}', '{$_POST['newuser-firstname']}', '{$_POST['newuser-lastname']}'
                 , '{$_POST['newuser-address']}', '{$_POST['newuser-postcode']}', '{$_POST['newuser-country']}', '{$_POST['newuser-email']}', '{$_POST['newuser-website']}')"))
                 {
                     header("Location: newuser-landing.php");
@@ -146,7 +146,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>Newsletter</title>
+    <title>Create new user</title>
 </head>
 <body>
 
@@ -179,6 +179,15 @@
             </p>
 
             <p>
+                <label for="newuser-priviledge">Bruger privilegie:</label>
+                <select id="priviledge" name="newuser-priviledge" class="logininput">
+                    <option value="User" selected>Bruger</option>
+                    <option value="Moderator">Moderator</option>
+                    <option value="Administrator">Administrator</option>                    
+                </select>
+            </p>
+
+            <p>
                 <label for="newuser-firstname">Fornavn: </label>
                 <input type="text" name="newuser-firstname" placeholder="Fornavn" class="logininput">
             </p>
@@ -195,12 +204,12 @@
 
             <p>
                 <label for="newuser-postcode">Postnummer: </label>
-                <input type="text" name="newuser-postcode" placeholder="Postnummer" id="postcode" class="logininput" onmouseout(<?php echo "findcity.apply(this, {$rows})"; ?>)>
+                <input type="text" name="newuser-postcode" placeholder="Postnummer" id="postcode" class="logininput">
             </p>
             
             <p>
                 <label for="newuser-city">By: </label>
-                <input type="text" name="newuser-city" placeholder="By" disabled class="logininput" id="city" value="">
+                <input type="text" name="newuser-city" placeholder="By" class="logininput" id="city">
             </p>
 
             <p>
