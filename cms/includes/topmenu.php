@@ -15,7 +15,7 @@
             if (isset($_SESSION['login-submit']))
             {
                 echo "<li>Velkommen, {$_SESSION['login-username']}</li>
-                <li><a href='#'>Min konto</a></li>";
+                <li><a href='myAccount.php'>Min konto</a></li>";
             }
             else
             {

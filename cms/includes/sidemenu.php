@@ -45,6 +45,5 @@
                 echo "<li><a href='createuser.php'>Opret bruger</a></li>";
             }
         ?>
-        <!-- <li><a href="createuser.php">Opret bruger</a></li> -->
     </ul>
 </nav>

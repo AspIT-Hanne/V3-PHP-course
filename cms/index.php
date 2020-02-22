@@ -9,6 +9,30 @@
         "<br>Skal du have nye skøjter klar til næste sæsons programmer?",
         "Off-ice træning er i fuld gang.<br> Vidste du, at vi også sælger in-line rulleskøjtehjul til at sætte under dine Edea støvler?",
         "Er du kommet godt i gang med sæsonen?<br> Er dine skøjter klar til de første konkurrencer?");
+
+    // Connect to database and fetch products
+    $db = new MySQLi("localhost", "halu", "1234", "v3cms");
+    
+    if($db->connect_error) 
+    {
+        die("Connection to database failed: ". $db->connect_error);
+    }
+    else
+    {
+        $result = $db->query("SELECT * FROM products");
+
+        if ($db->error)
+            {
+                echo $db->error;
+            }
+            else
+            {
+                for($i = 0; $i < 3; $i++)
+                {
+                    $productrow[$i] = $result->fetch_assoc();
+                }
+            }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -70,17 +94,31 @@
             <section>
                 <h2>Udvalgte produkter:</h2>
                 <div class="products">
-                    <article>
+                    <?php
+                        for($j = 0; $j < 3; $j++)
+                        {
+
+                            echo 
+                            "<article>
+                                <img src='img/{$productrow[$j]['ProdImage']}'>
+                                <h3>{$productrow[$j]['ProdName']}</h3>
+                                <p>Antal stjerner: {$productrow[$j]['ProdStars']}</p>
+                                <p>Beskrivelse:</p>
+                                <p>{$productrow[$j]['ProdShortDesc']}</p>
+                                <p>Pris: {$productrow[$j]['ProdPrice']},-</p>
+                                <button>Køb nu!</button>
+                            </article>";
+                        }
+
+                    ?>
+                    <!-- <article>
                         <img src="img/piano-edea-skates.jpg" alt="Piano Edea skate">
                         <h3>Edea Piano</h3>
                         <p>Antal stjerner: 6</p>
                         <p>Beskrivelse:</p>
-                        <p>Kunstskøjteløbere forsøger altid at flytte grænserne, og med den nyeste teknologi er det 
-                        nu blevet endnu lettere.</p>
-                        <p>Vores dygtige teknikere har med feedback fra verdens bedste skøjteløbere og med brug af 
-                        den allernyeste teknologi skabt en helt unik ny støvle, Piano.</p>
-                        <p>Edea Piano er 100% håndlavet italiensk design. Vores første støvle, der giver ekstra stabilitet, 
-                        kraft og bevægelse med det dobbelte antichok system og revolutionære design.</p>
+                        <p>Kunstskøjteløbere forsøger altid at flytte grænserne, og med den nyeste teknologi er det nu blevet endnu lettere.</p>
+                        <p>Vores dygtige teknikere har med feedback fra verdens bedste skøjteløbere og med brug af den allernyeste teknologi skabt en helt unik ny støvle, Piano.</p>
+                        <p>Edea Piano er 100% håndlavet italiensk design. Vores første støvle, der giver ekstra stabilitet, kraft og bevægelse med det dobbelte antichok system og revolutionære design.</p>
                         <p>Stivhed: 95</p>
                         <p>Understøtter: triple og quad spring</p>
                         <p>Pris: 4.500,-</p>
@@ -94,9 +132,7 @@
                         <p>Beskrivelse:</p>
                         <p>Ice Fly er den letteste kunstskøjtestøvle på markedet i et ultra moderne design. 
                         Støvlens fleksibilitet giver mulighed for ekstra ynde og elegance til enhver performance.</p>
-                        <p>Med en øget hældning på forsiden af hælen, forkortes reaktionstiden, fordi foden allerede 
-                        er i den korrekte position. Dette giver kunstskøjteløbere mere flydende bevægelser i indløbet 
-                        og forberedelserne til spring.</p>
+                        <p>Med en øget hældning på forsiden af hælen, forkortes reaktionstiden, fordi foden allerede er i den korrekte position. Dette giver kunstskøjteløbere mere flydende bevægelser i indløbet og forberedelserne til spring.</p>
                         <p>Edea Ice-Fly er 100% håndlavet italiensk design. Den dobbelte sål giver ekstra 
                         stødabsorbering og hjælper til at passe på dine led.</p>
                         <p>Stivhed: 90</p>
@@ -127,19 +163,14 @@
                         <h3>Edea Overture</h3>
                         <p>Antal stjerner: 3</p>
                         <p>Beskrivelse:</p>
-                        <p>Overture er en kombination af let design og Edea teknologi. Det er den mest solgte Edea støvle. 
-                        Støvlen har stor støtte og fleksibilitet for kunstskøjteløbere, der arbejder på deres grundløb, 
-                        enkeltspring og axel.</p>
-                        <p>Overture er baseret på vores teknologiske viden om kunstskøjteløb på højt niveau og er baseret 
-                        på vores passion for kunstskøjteløb.</p>
-                        <p>Edea Overture er 100% håndlavet italiensk design. Støvlen er letvægtsdesign, som sikrer god 
-                        responsivitet. Den giver en god fornemmelse for isen, som gør det lettere at udvikle det grundlæggende 
-                        skøjteløb.</p>
+                        <p>Overture er en kombination af let design og Edea teknologi. Det er den mest solgte Edea støvle. Støvlen har stor støtte og fleksibilitet for kunstskøjteløbere, der arbejder på deres grundløb, enkeltspring og axel.</p>
+                        <p>Overture er baseret på vores teknologiske viden om kunstskøjteløb på højt niveau og er baseret på vores passion for kunstskøjteløb.</p>
+                        <p>Edea Overture er 100% håndlavet italiensk design. Støvlen er letvægtsdesign, som sikrer god responsivitet. Den giver en god fornemmelse for isen, som gør det lettere at udvikle det grundlæggende skøjteløb.</p>
                         <p>Stivhed: 48</p>
                         <p>Understøtter: enkeltspring / axel</p>
                         <p>Pris: 1.175,-</p>
                         <button>Køb nu!</button>
-                    </article>
+                    </article> -->
                 </div>
             </section>
         </main>

@@ -1,7 +1,68 @@
 <?php
+
+    $errormessage = "";
     if(!isset($_SESSION)) 
     { 
         session_start(); 
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") 
+    {
+        $_SESSION += $_POST;
+        $username = "'" . $_SESSION["login-username"] . "'";
+
+        $db = new MySQLi("localhost", "halu", "1234", "v3cms");
+
+        $imageFileName = basename($_FILES['newproduct-image']['name']);
+        $imageDir = "C:\Users\halu\code\php\cms\img\\";
+        $imageTmp = $_FILES['newproduct-image']['tmp_name'];
+        $imageFullPath = $imageDir . $imageFileName;
+
+        if($_FILES['newproduct-image']['error'] == 0)
+        {
+            if(move_uploaded_file($imageTmp, $imageFullPath))
+            {
+                
+                $imageErr = "Billedet blev uploadet";
+            }
+            else
+            {
+                $imageErr = "Billedet kunne ikke flyttes";
+            }
+        }
+        else
+        {
+            $imageErr = "Fejl i upload af billedet:" . $_FILES['newproduct-image']['error'];
+        }
+    
+        if($db->connect_error) 
+        {
+            die("Connection to database failed: ". $db->connect_error);
+        }
+        else
+        {
+            $resultuser = $db->query("SELECT * FROM edeausers WHERE Username = $username");
+
+            if ($db->error)
+                {
+                    echo $db->error;
+                }
+                else
+                {
+                    $row = $resultuser->fetch_assoc();
+                    $newProductCreatedBy = $row['Username'];
+                    $newProductCreatedDate = date('Y-m-d');
+
+                    if($db->query("INSERT INTO products (ProdImage, ProdName, ProdStars, ProdShortDesc, ProdLongDesc, ProdStiff, ProdSupports, ProdPrice, ProdStock, ProdCreatedBy, ProdCreatedDate) VALUE ('{$imageFileName}', '{$_POST['newproduct-name']}', '{$_POST['newproduct-stars']}', '{$_POST['newproduct-shortdesc']}', '{$_POST['newproduct-longdesc']}', '{$_POST['newproduct-stiff']}', '{$_POST['newproduct-supports']}', '{$_POST['newproduct-price']}', '{$_POST['newproduct-stock']}', '{$newProductCreatedBy}', '{$newProductCreatedDate}')"))
+                        {
+                            //header("Location: newuser-landing.php");
+                        }
+                        else
+                        {
+                            $errormessage = "Produktoprettelse lykkedes ikke";
+                        }
+                }
+        }
     }
 ?>
 
@@ -23,7 +84,8 @@
     <div class="content">
         <main>
             <h1>Opret nyt produkt</h1>
-            <form method="post" action="newProduct.php">
+
+            <form method="post" enctype="multipart/form-data">
                 <p>
                     <label for="newproduct-name">Produkt navn: </label>
                     <input type="text" name="newproduct-name" placeholder="Produktnavn">
@@ -40,9 +102,9 @@
                         <option value="1" selected>1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
-                        <option value="3">4</option>  
-                        <option value="3">5</option>  
-                        <option value="3">6</option>                  
+                        <option value="4">4</option>  
+                        <option value="5">5</option>  
+                        <option value="6">6</option>                  
                     </select>
                 </p>
                 
@@ -69,7 +131,7 @@
                 <p>
                     <label for="newproduct-supports">Understøtter (hold ctrl nede for at vælge flere): </label>
                     <select name="newproduct-supports" multiple size="4">
-                        <option value="enkeltspring">Enkeltspring</option>
+                        <option value="enkeltspring" selected>Enkeltspring</option>
                         <option value="dobbeltspring">Dobbeltspring</option>
                         <option value="triplespring">Triplespring</option>
                         <option value="quadspring">Quadspring</option>
@@ -93,8 +155,16 @@
             </form>
                     
         </main>
-
-        <pre><?php print_r($_SESSION); ?></pre>
+        <pre><?php  
+            if ($_SERVER["REQUEST_METHOD"] == "POST") 
+            {
+                print_r($_FILES);
+            } 
+            
+            ?></pre>
+        <pre><?php echo $errormessage . "<br>";
+        print_r($_SESSION); ?></pre>
+        <pre><?php print_r($_POST); ?></pre>
 
         <?php include "includes/footer.php"; ?>
 
