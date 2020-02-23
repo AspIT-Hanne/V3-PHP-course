@@ -22,16 +22,16 @@
         $result = $db->query("SELECT * FROM products");
 
         if ($db->error)
+        {
+            echo $db->error;
+        }
+        else
+        {
+            while($row = $result->fetch_assoc())
             {
-                echo $db->error;
+                $productrow[] = $row;
             }
-            else
-            {
-                for($i = 0; $i < 3; $i++)
-                {
-                    $productrow[$i] = $result->fetch_assoc();
-                }
-            }
+        }
     }
 ?>
 
@@ -84,6 +84,7 @@
 
         <main>
             <h1>Edea støvler - høj kvalitet til top præstationer!</h1>
+            <pre><?php print_r($productrow); ?></pre>
             <section>
                 <article>
                     <p>Kunstskøjteløbere har altid flyttet grænser, og de ønsker den nyeste teknologi til at hjælpe dem med dette. 
@@ -95,7 +96,8 @@
                 <h2>Udvalgte produkter:</h2>
                 <div class="products">
                     <?php
-                        for($j = 0; $j < 3; $j++)
+                        $rowCount = count($productrow);
+                        for($j = $rowCount - 1; $j > $rowCount - 4; $j--)
                         {
 
                             echo 
@@ -106,7 +108,7 @@
                                 <p>Beskrivelse:</p>
                                 <p>{$productrow[$j]['ProdShortDesc']}</p>
                                 <p>Pris: {$productrow[$j]['ProdPrice']},-</p>
-                                <button>Køb nu!</button>
+                                <a href='showProduct.php?id={$productrow[$j]['ID']}' class='buybtn'>Køb nu!</a>
                             </article>";
                         }
 
@@ -146,8 +148,7 @@
                         <h3>Edea Concerto</h3>
                         <p>Antal stjerner: 5</p>
                         <p>Beskrivelse:</p>
-                        <p>Concerto er udviklet til skøjteløb på højt niveau. Edea har brugt sin erfaring og knowhow 
-                        til at producere en støvle, der kombinerer moderne teknologi med det traditionelle udseende.</p>
+                        <p>Concerto er udviklet til skøjteløb på højt niveau. Edea har brugt sin erfaring og knowhow til at producere en støvle, der kombinerer moderne teknologi med det traditionelle udseende.</p>
                         <p>Concertos ekstra styrke betyder, at den ofte bruges af mandlige skøjteløbere eller af 
                         parløbere, hvor de høje spring kræver ekstra understøttelse og styrke i støvlen.</p>
                         <p>Edea Concerto er 100% håndlavet italiensk design. Den dobbelte sål giver ekstra 

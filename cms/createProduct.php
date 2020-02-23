@@ -10,30 +10,45 @@
     {
         $_SESSION += $_POST;
         $username = "'" . $_SESSION["login-username"] . "'";
-
         $db = new MySQLi("localhost", "halu", "1234", "v3cms");
 
-        $imageFileName = basename($_FILES['newproduct-image']['name']);
         $imageDir = "C:\Users\halu\code\php\cms\img\\";
-        $imageTmp = $_FILES['newproduct-image']['tmp_name'];
-        $imageFullPath = $imageDir . $imageFileName;
+        //$prodImages = array();
+        $imageErr[] = "";
 
-        if($_FILES['newproduct-image']['error'] == 0)
+        if(!empty($_FILES['newproduct-image']))
         {
-            if(move_uploaded_file($imageTmp, $imageFullPath))
+            $prodImagesString = implode(" ", $_FILES['newproduct-image']['name']);
+            
+            for($i = 0; $i < count($_FILES['newproduct-image']['name']); $i++)
             {
-                
-                $imageErr = "Billedet blev uploadet";
-            }
-            else
-            {
-                $imageErr = "Billedet kunne ikke flyttes";
+                if($_FILES['newproduct-image']['error'][$i] == 0)
+                {
+                    $imageTmp = $_FILES['newproduct-image']['tmp_name'][$i];
+                    $imageFileName = basename($_FILES['newproduct-image']['name'][$i]);
+                    $imageFullPath = $imageDir . $imageFileName;
+                    if(move_uploaded_file($imageTmp, $imageFullPath))
+                    {
+                        
+                        $imageErr[$i] = 0;
+                    }
+                    else
+                    {
+                        $imageErr[$i] = "Billedet kunne ikke flyttes";
+                    }
+                }
+                else
+                {
+                    $imageErr[$i] = "Fejl i upload af billedet:" . $_FILES['newproduct-image']['error'][$i];
+                }
             }
         }
         else
         {
-            $imageErr = "Fejl i upload af billedet:" . $_FILES['newproduct-image']['error'];
+            $prodImagesString = "No_image_available.png";
         }
+
+        
     
         if($db->connect_error) 
         {
@@ -50,16 +65,24 @@
                 else
                 {
                     $row = $resultuser->fetch_assoc();
+
                     $newProductCreatedBy = $row['Username'];
                     $newProductCreatedDate = date('Y-m-d');
 
-                    if($db->query("INSERT INTO products (ProdImage, ProdName, ProdStars, ProdShortDesc, ProdLongDesc, ProdStiff, ProdSupports, ProdPrice, ProdStock, ProdCreatedBy, ProdCreatedDate) VALUE ('{$imageFileName}', '{$_POST['newproduct-name']}', '{$_POST['newproduct-stars']}', '{$_POST['newproduct-shortdesc']}', '{$_POST['newproduct-longdesc']}', '{$_POST['newproduct-stiff']}', '{$_POST['newproduct-supports']}', '{$_POST['newproduct-price']}', '{$_POST['newproduct-stock']}', '{$newProductCreatedBy}', '{$newProductCreatedDate}')"))
+                    $prodSupports = array();
+
+                    if(!empty($_POST['newproduct-supports']))
+                    {
+                        $prodSupportsString = implode(" ", $_POST['newproduct-supports']);
+                    }
+
+                    if($db->query("INSERT INTO products (ProdImage, ProdName, ProdStars, ProdShortDesc, ProdLongDesc, ProdStiff, ProdSupports, ProdPrice, ProdStock, ProdCreatedBy, ProdCreatedDate) VALUE ('{$prodImagesString}', '{$_POST['newproduct-name']}', '{$_POST['newproduct-stars']}', '{$_POST['newproduct-shortdesc']}', '{$_POST['newproduct-longdesc']}', '{$_POST['newproduct-stiff']}', '{$prodSupportsString}', '{$_POST['newproduct-price']}', '{$_POST['newproduct-stock']}', '{$newProductCreatedBy}', '{$newProductCreatedDate}')"))
                         {
-                            //header("Location: newuser-landing.php");
+                            $errormessage = "Produktoprettelse lykkedes.";
                         }
                         else
                         {
-                            $errormessage = "Produktoprettelse lykkedes ikke";
+                            $errormessage = "Produktoprettelse lykkedes ikke: ".$db->error;
                         }
                 }
         }
@@ -93,7 +116,8 @@
 
                 <p>
                     <label for="newproduct-image">Klik for at uploade produkt billede</label>
-                    <input type="file" name="newproduct-image">
+                    <input type="file" name="newproduct-image[]" multiple>
+                    <p>ctrl + klik for at markere og uploade flere billeder.</p>
                 </p>
 
                 <p>
@@ -130,7 +154,7 @@
                 
                 <p>
                     <label for="newproduct-supports">Understøtter (hold ctrl nede for at vælge flere): </label>
-                    <select name="newproduct-supports" multiple size="4">
+                    <select name="newproduct-supports[]" multiple size="4">
                         <option value="enkeltspring" selected>Enkeltspring</option>
                         <option value="dobbeltspring">Dobbeltspring</option>
                         <option value="triplespring">Triplespring</option>
@@ -155,6 +179,7 @@
             </form>
                     
         </main>
+        <h3>$_FILES:</h3>
         <pre><?php  
             if ($_SERVER["REQUEST_METHOD"] == "POST") 
             {
@@ -162,8 +187,9 @@
             } 
             
             ?></pre>
-        <pre><?php echo $errormessage . "<br>";
-        print_r($_SESSION); ?></pre>
+        <h3>$_SESSION:</h3>
+        <pre><?php print_r($_SESSION); ?></pre>
+        <h3>$_POST:</h3>
         <pre><?php print_r($_POST); ?></pre>
 
         <?php include "includes/footer.php"; ?>
