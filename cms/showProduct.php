@@ -60,7 +60,7 @@
 
         <main>
             <h1><?php echo $productRow['ProdName']; ?></h1>
-                <div class="showProduct">
+            <div class="showProduct">
                 <section class="leftColumn">
                     
                     <p><?php 
@@ -78,11 +78,14 @@
                     <a href="#">Køb nu!</a>
                     <p><span>Antal stjerner: </span><?php echo $productRow['ProdStars']; ?></p>
                     <p><span>Støvle stivhed: </span><?php echo $productRow['ProdStiff']; ?></p>
-                    <p><span>Understøtter: </span><?php echo reset($productSupports); ?></p>
-                    <?php if(count($productSupports) > 0)
-                        for($i = 1; $i < count($productSupports); $i++)
+                    <p><span>Understøtter: </span><?php echo $productSupports[0]; ?></p>
+                    <?php 
+                        if(count($productSupports) > 1)
                         {
-                            echo "<p><span>&nbsp; </span> $productSupports[$i]</p>";
+                            for($i = 1; $i < count($productSupports); $i++)
+                            {
+                                echo "<p><span>&nbsp; </span> $productSupports[$i]</p>";
+                            }
                         }
                     ?>
                     <p><span>Pris: </span><?php echo $productRow['ProdPrice']; ?>,-</p>

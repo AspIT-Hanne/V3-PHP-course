@@ -1,36 +1,49 @@
 <?php
 
     $errormessage = "";
+    // Start or continue current session
     if(!isset($_SESSION)) 
     { 
         session_start(); 
     }
 
+    // If user has pushed a submit button
     if ($_SERVER["REQUEST_METHOD"] == "POST") 
     {
+        // Copy all values from $_POST to $_SESSION to keep them available for the whole session
         $_SESSION += $_POST;
+        // Put ' ' around login-username to use as comparison in SQL Select statement
         $username = "'" . $_SESSION["login-username"] . "'";
+        // Create database connection. Returns MySQLi object.
         $db = new MySQLi("localhost", "halu", "1234", "v3cms");
 
+        // Define targe-directory for uploaded files
         $imageDir = "C:\Users\halu\code\php\cms\img\\";
-        //$prodImages = array();
+        // Initialise array to hold error-messages related to file-upload
         $imageErr[] = "";
 
+        // If the array with information about file uploads ($_FILES) is not empty
         if(!empty($_FILES['newproduct-image']))
         {
-            $prodImagesString = implode(" ", $_FILES['newproduct-image']['name']);
-            
+            // Count how many images were uploaded. Do the for loop as many times as pictures were uploaded.
             for($i = 0; $i < count($_FILES['newproduct-image']['name']); $i++)
             {
+                // If no error was returned at the upload of the current image
                 if($_FILES['newproduct-image']['error'][$i] == 0)
                 {
+                    // Remove spaces in image filename - if any and add to array containing all image names from this one submit action
+                    $noSpaceString[] = str_replace(' ', '', $_FILES['newproduct-image']['name'][$i]);
+                    // Move image current temp location/name to variable
                     $imageTmp = $_FILES['newproduct-image']['tmp_name'][$i];
-                    $imageFileName = basename($_FILES['newproduct-image']['name'][$i]);
+                    // Retrieve just the filename from the image name
+                    $imageFileName = basename($noSpaceString[$i]);
+                    // Combine the path for image uploads with the image filename
                     $imageFullPath = $imageDir . $imageFileName;
+                    // Check if file was moved correctly from $imageTmp to $imageFullPath
                     if(move_uploaded_file($imageTmp, $imageFullPath))
                     {
                         
-                        $imageErr[$i] = 0;
+                        $imageErr[$i] = 0; // If move was successfull errormessage is 0
                     }
                     else
                     {
@@ -42,40 +55,53 @@
                     $imageErr[$i] = "Fejl i upload af billedet:" . $_FILES['newproduct-image']['error'][$i];
                 }
             }
+            // Convert array of image names (with spaces removed) to string, where image names are separated by space
+            $prodImagesString = implode(" ", $noSpaceString);
         }
         else
         {
+            // If $_FILES is empty nothing was uploaded. Add name of standard no image picture (which will then be uploaded to database)
             $prodImagesString = "No_image_available.png";
         }
 
         
-    
+        // Check if connection to database failed
         if($db->connect_error) 
         {
+            // Finish script and write error message
             die("Connection to database failed: ". $db->connect_error);
         }
-        else
+        else // If connection to database succeeded
         {
+            // Get information about current logged in user from database (basically just double checking that user is in the database). Returns MySQLi-result object.
             $resultuser = $db->query("SELECT * FROM edeausers WHERE Username = $username");
 
-            if ($db->error)
+            // Check if SQL query succeeded
+            if ($db->error) // If SQL query failed
                 {
                     echo $db->error;
                 }
-                else
+                else // If SQL query succeeded
                 {
+                    // Transfer MySQLi-result object to array (that we can work on/with)
                     $row = $resultuser->fetch_assoc();
 
+                    // Get username to add to new product
                     $newProductCreatedBy = $row['Username'];
+                    // Get date to add to new product
                     $newProductCreatedDate = date('Y-m-d');
 
+                    // Initialise array to contain (possible) multiple values from select-field "newproduct-supports"
                     $prodSupports = array();
 
+                    // If the user selected one or more values in select-field "newproduct-supports"
                     if(!empty($_POST['newproduct-supports']))
                     {
+                        // Convert the values selected from array to string
                         $prodSupportsString = implode(" ", $_POST['newproduct-supports']);
                     }
-
+                    // Do SQL query to insert data from form fields (and a few others) into table "products"
+                    // Test if SQL query succeeded
                     if($db->query("INSERT INTO products (ProdImage, ProdName, ProdStars, ProdShortDesc, ProdLongDesc, ProdStiff, ProdSupports, ProdPrice, ProdStock, ProdCreatedBy, ProdCreatedDate) VALUE ('{$prodImagesString}', '{$_POST['newproduct-name']}', '{$_POST['newproduct-stars']}', '{$_POST['newproduct-shortdesc']}', '{$_POST['newproduct-longdesc']}', '{$_POST['newproduct-stiff']}', '{$prodSupportsString}', '{$_POST['newproduct-price']}', '{$_POST['newproduct-stock']}', '{$newProductCreatedBy}', '{$newProductCreatedDate}')"))
                         {
                             $errormessage = "Produktoprettelse lykkedes.";
@@ -107,7 +133,7 @@
     <div class="content">
         <main>
             <h1>Opret nyt produkt</h1>
-
+            <!-- enctype="multipart/form-data" allows for file-uploads -->
             <form method="post" enctype="multipart/form-data">
                 <p>
                     <label for="newproduct-name">Produkt navn: </label>
@@ -116,6 +142,7 @@
 
                 <p>
                     <label for="newproduct-image">Klik for at uploade produkt billede</label>
+                    <!-- name="newproduct-image[]" indicates that multiple uploads are allowed and stored in array -->
                     <input type="file" name="newproduct-image[]" multiple>
                     <p>ctrl + klik for at markere og uploade flere billeder.</p>
                 </p>
@@ -154,6 +181,7 @@
                 
                 <p>
                     <label for="newproduct-supports">Understøtter (hold ctrl nede for at vælge flere): </label>
+                    <!-- name="newproduct-supports[]" indicates that multiple values are allowed and stored in array -->
                     <select name="newproduct-supports[]" multiple size="4">
                         <option value="enkeltspring" selected>Enkeltspring</option>
                         <option value="dobbeltspring">Dobbeltspring</option>
@@ -179,6 +207,7 @@
             </form>
                     
         </main>
+        <!-- For test/development purposes print $_FILES, $_POST, and $_SESSION -->
         <h3>$_FILES:</h3>
         <pre><?php  
             if ($_SERVER["REQUEST_METHOD"] == "POST") 
