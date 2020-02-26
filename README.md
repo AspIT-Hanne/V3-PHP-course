@@ -21,3 +21,5 @@ showproduct.php - dynamically generated product page
 
 
 ![Screenshot_2020-02-26 Vis produkt](https://user-images.githubusercontent.com/57984239/75333381-5a2d4680-5886-11ea-96ec-5c92d865b109.png)
+
+Screenshots are made with Firefox Screenshots - screenshotting whole page eventhough only some of it is displayed on the monitor. This is the reason for the sidebar not having 100% height (height is set to 100vh).
