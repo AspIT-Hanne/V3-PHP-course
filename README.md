@@ -17,7 +17,7 @@ createProduct.php - using PHP and SQL to insert new products into database inclu
 ![Screenshot_2020-02-26 Nyt produkt](https://user-images.githubusercontent.com/57984239/75333382-5b5e7380-5886-11ea-9f57-8f686d71b942.png)
 
 
-showproduct.php - dynamically generated product page
+showProduct.php - dynamically generated product page
 
 
 ![Screenshot_2020-02-26 Vis produkt](https://user-images.githubusercontent.com/57984239/75333381-5a2d4680-5886-11ea-96ec-5c92d865b109.png)
