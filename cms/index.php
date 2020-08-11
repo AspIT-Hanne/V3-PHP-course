@@ -39,6 +39,8 @@
                 // First product will be on $productrow[0], second product on $productrow[1]
                 $productrow[] = $row;
             }
+
+            
         }
     }
 ?>
@@ -94,7 +96,6 @@
 
         <main>
             <h1>Edea støvler - høj kvalitet til top præstationer!</h1>
-            <pre><?php print_r($productrow); ?></pre>
             <section>
                 <article>
                     <p>Kunstskøjteløbere har altid flyttet grænser, og de ønsker den nyeste teknologi til at hjælpe dem med dette. 
@@ -109,14 +110,24 @@
                         // Count how many products were returned from database and put into array $productrow
                         $rowCount = count($productrow);
                         // Start counting from last element in table - 1, because array-indexes start at 0. So product no 5 in database would be on array index 4. End loop after three products to show the last three products in the database on the index page. If product no 5 is first product to show, then product no 3 is last product to show (show index 4, 3, and 2). Index of third product will always be rowcount - 3 (in this case 5 - 3), so we need to make sure it never counts any lower than this - which we achieve with $j > $rowCount - 4.
+                        
                         for($j = $rowCount - 1; $j > $rowCount - 4; $j--)
                         {
+                            // If there are multiple images for a product explode all the image names into array else move the one image name to index 0 of new array of images. This way we can display only the first image of the product on this page.
+                            if(strpos($productrow[$j]['ProdImage'], " "))
+                            {
+                                $productImages = explode(" ", $productrow[$j]['ProdImage']);
+                            }
+                            else
+                            {
+                                $productImages[0] = $productrow[$j]['ProdImage'];
+                            }
 
                             echo 
                             // echo all necessary HTML code to insert products. This will be looped and inserted as many time as looped.
                             // a href='showProduct.php?id={$productrow[$j]['ID']}' links to individual product page generated dynamically by the product-ID
                             "<article>
-                                <img src='img/{$productrow[$j]['ProdImage']}'>
+                                <img src='img/$productImages[0]'>
                                 <h3>{$productrow[$j]['ProdName']}</h3>
                                 <p>Antal stjerner: {$productrow[$j]['ProdStars']}</p>
                                 <p>Beskrivelse:</p>
