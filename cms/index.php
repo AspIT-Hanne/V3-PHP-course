@@ -54,18 +54,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Edea skates</title>
 </head>
-<body class="
-    <?php 
-        // Play around with changing background color depending on whether minute is even or uneven
-        if ($currentMinute%2 == 0) 
-        {
-            echo "light";
-        }
-        else
-        {
-            echo "dark";
-        }
-    ?>">
+<body>
 
     <?php 
         include "includes/topmenu.php";
@@ -77,21 +66,9 @@
     
     <div class="content">
         
-        <header class="
-            <?php
-                // Change header class (changed header background image) based on month/season
-                 if ($currentMonth < 7)
-                 {
-                     echo "spring";
-                 }
-                 else
-                 {
-                     echo "fall";
-                 }
-            ?>
-        ">
-        <!-- Insert text based on month -->
-        <p class="neon">Det er <?php echo $month[floor($currentMonth) -1];?> og dermed <?php echo $season[floor($currentMonth/3)] . $seasonText[floor($currentMonth/3)];?></p>
+        
+        <header>
+            <img src="img/edea-home-of-champions.jpg">
         </header>
 
         <main>
@@ -99,7 +76,7 @@
             <section>
                 <article>
                     <p>Kunstskøjteløbere har altid flyttet grænser, og de ønsker den nyeste teknologi til at hjælpe dem med dette. 
-                    Edea’s højt kvalificerede teknikere har fået feedback på, hvilke ønsker og krav skøjteløbere har til støvler. 
+                    Edea's højt kvalificerede teknikere har fået feedback på, hvilke ønsker og krav skøjteløbere har til støvler. 
                     Dette, kombineret med den nyeste forskning, gør Edeas støvler både revolutionerende og af højeste kvalitet.</p>
                 </article>
             </section>
@@ -114,13 +91,17 @@
                         for($j = $rowCount - 1; $j > $rowCount - 4; $j--)
                         {
                             // If there are multiple images for a product explode all the image names into array else move the one image name to index 0 of new array of images. This way we can display only the first image of the product on this page.
-                            if(strpos($productrow[$j]['ProdImage'], " "))
+                            if(strpos($productrow[$j]['PPic'], " "))
                             {
-                                $productImages = explode(" ", $productrow[$j]['ProdImage']);
+                                $productImages = explode(" ", $productrow[$j]['PPic']);
+                            }
+                            else if(empty($productrow[$j]['PPic']))
+                            {
+                                $productImages[0] = "imagecomingsoon.png";
                             }
                             else
                             {
-                                $productImages[0] = $productrow[$j]['ProdImage'];
+                                $productImages[0] = $productrow[$j]['PPic'];
                             }
 
                             echo 
@@ -128,12 +109,12 @@
                             // a href='showProduct.php?id={$productrow[$j]['ID']}' links to individual product page generated dynamically by the product-ID
                             "<article>
                                 <img src='img/$productImages[0]'>
-                                <h3>{$productrow[$j]['ProdName']}</h3>
-                                <p>Antal stjerner: {$productrow[$j]['ProdStars']}</p>
+                                <h3>{$productrow[$j]['PName']}</h3>
+                                <p>Antal stjerner: {$productrow[$j]['PStars']}</p>
                                 <p>Beskrivelse:</p>
-                                <p>{$productrow[$j]['ProdShortDesc']}</p>
-                                <p>Pris: {$productrow[$j]['ProdPrice']},-</p>
-                                <a href='showProduct.php?id={$productrow[$j]['ID']}' class='buybtn'>Køb nu!</a>
+                                <p>{$productrow[$j]['PDesc']}</p>
+                                <p>Pris: {$productrow[$j]['PPrice']},-</p>
+                                <a href='showProduct.php?id={$productrow[$j]['PID']}' class='buybtn'>Køb nu!</a>
                             </article>";
                         }
 

@@ -39,16 +39,6 @@ body
     margin: auto;
     font-family: $font-main;
     background-color: $color-bg-main;
-
-    &.light
-    {
-        background-color: $color-bg-main;
-    }
-
-    &.dark
-    {
-        background-color: darken($color-bg-main, 15%);
-    }
 }
 
 .side
@@ -90,13 +80,18 @@ body
     }
 }
 
-.content
+.content, .aboutus
 {
     margin-left: 220px;
     display: flex;
     flex-direction: column;
     position: relative;
     top: 50px;
+
+    img
+    {
+        max-width: 100%;
+    }
 }
 
 .top
@@ -166,16 +161,6 @@ body
 
 header
 {
-    &.spring
-    {
-        background: url('../img/edea-ice-skate-collection-2018.jpg') top left 100%;
-    }
-
-    &.fall
-    {
-        background: url('../img/edea-home-of-champions.jpg') top left 100%;
-    }
-    
     p
     {
         
@@ -199,6 +184,25 @@ header
         }
     }
 
+}
+
+.aboutus
+{
+    p
+    {
+        margin: 1rem 0;
+    }
+
+    ul
+    {
+        list-style-position: inside;
+    }
+
+    img
+    {
+        margin: 3rem 0;
+        width: 100%;
+    }
 }
 
 main
@@ -255,6 +259,13 @@ section
         h3
         {
             font-size: 1.8rem;
+        }
+
+        button
+        {
+            background: linear-gradient(scale-color($color-bg-nav, $lightness:50%), $color-bg-nav);
+            padding: 1vw 0;
+            vertical-align: bottom;
         }
     }
 

@@ -56,4 +56,4 @@
 
     <p>Dit nye password er: <?php echo generatePw(8, $pwstring); ?></p>
 
-    <p><?php echo palindrome("regningen"); ?></p>
+    <p><?php echo palindrome("regninger"); ?></p>

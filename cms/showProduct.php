@@ -16,25 +16,29 @@
         }
         else
         {
-            $resultProd = $db->query("SELECT * FROM products WHERE ID = $id");
+            $resultProd = $db->query("SELECT * FROM products WHERE PID = $id");
             $productRow = $resultProd->fetch_assoc();
 
-            if(strpos($productRow['ProdSupports'], " "))
+            if(strpos($productRow['PSupp'], " "))
             {
-                $productSupports = explode(" ", $productRow['ProdSupports']);
+                $productSupports = explode(" ", $productRow['PSupp']);
             }
             else
             {
-                $productSupports[0] = $productRow['ProdSupports'];
+                $productSupports[0] = $productRow['PSupp'];
             }
 
-            if(strpos($productRow['ProdImage'], " "))
+            if(strpos($productRow['PPic'], " "))
             {
-                $productImages = explode(" ", $productRow['ProdImage']);
+                $productImages = explode(" ", $productRow['PPic']);
+            }
+            elseif(empty($productRow['PPic']))
+            {
+                $productImages[0] = "imagecomingsoon.png";
             }
             else
             {
-                $productImages[0] = $productRow['ProdImage'];
+                $productImages[0] = $productRow['PPic'];
             }
         }
     }
@@ -59,7 +63,7 @@
     <div class="content">
 
         <main>
-            <h1><?php echo $productRow['ProdName']; ?></h1>
+            <h1><?php echo $productRow['PName']; ?></h1>
             <div class="showProduct">
                 <section class="leftColumn">
                     
@@ -71,13 +75,13 @@
                     ?>
                     </p>
                     <h2>Beskrivelse:</h2>
-                    <p><?php echo $productRow['ProdLongDesc']; ?></p>
+                    <p><?php echo $productRow['PDesc']; ?></p>
                 </section>
 
                 <section class="rightColumn">
                     <a href="#">Køb nu!</a>
-                    <p><span>Antal stjerner: </span><?php echo $productRow['ProdStars']; ?></p>
-                    <p><span>Støvle stivhed: </span><?php echo $productRow['ProdStiff']; ?></p>
+                    <p><span>Antal stjerner: </span><?php echo $productRow['PStars']; ?></p>
+                    <p><span>Støvle stivhed: </span><?php echo $productRow['PStiff']; ?></p>
                     <p><span>Understøtter: </span><?php echo $productSupports[0]; ?></p>
                     <?php 
                         if(count($productSupports) > 1)
@@ -88,10 +92,10 @@
                             }
                         }
                     ?>
-                    <p><span>Pris: </span><?php echo $productRow['ProdPrice']; ?>,-</p>
+                    <p><span>Pris: </span><?php echo $productRow['PPrice']; ?>,-</p>
                     <p><span>På lager: </span>
                         <?php 
-                            if($productRow['ProdStock'] != 0)
+                            if($productRow['PStock'] != 0)
                             {
                                 echo "Ja";
                             }

@@ -1,5 +1,5 @@
 <?php
-    $elever = ["martin", "mogens", "victoria", "fenris", "line"];
+    $elever = ["martin", "mogens", "victoria", "alexander", "line"];
 
     $find = "mogens";
 
@@ -37,8 +37,8 @@
         "fag" => "Teknik"
         ),
         array(
-        "fornavn" => "Jonas",
-        "efternavn" => "Rasmussen",
+        "fornavn" => "Ulf",
+        "efternavn" => "Skaaning",
         "fag" => "AspIT-Lab"
         )
     );
