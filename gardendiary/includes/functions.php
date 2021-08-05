@@ -12,6 +12,18 @@
         {
             return $string;
         }
-}
+    }
+
+    function setValue($field)
+    {
+        if(empty($_POST[$field]))
+        {
+            return "NULL";
+        }
+        else
+        {
+            return $_POST[$field];
+        }
+    }
 
 ?>

@@ -1,55 +1,65 @@
 <?php
 
-    include_once "includes/connection.php";
-    include_once "includes/menu.php";
-    include_once "includes/head.php";
+    include_once "includes/includes.php";
 
     $plantID = $_GET['id'];
 
-    $dbdata = $connection->query("SELECT * FROM planter WHERE PID = '$plantID'");
+    $dbconnection = new DbOperations();
 
-    if($connection->error)
+    $thisPlant = $dbconnection->getDataByID("planter", $plantID);
+
+    // If there are more than one month in the field PSowMonthIn (there will be a space if this is the case)
+    if(strpos($thisPlant['PSowMonthIn'], " "))
     {
-        echo($connection->error);
+        // Replace spaces with <br> and put in variable $thisSowMonthIn to get new line between each month
+        $thisSowMonthIn = str_replace(" ", "<br>", $thisPlant['PSowMonthIn']);
     }
     else
     {
-        $thisplant = $dbdata->fetch_assoc();
-
-        if(strpos($thisplant['PSowMonthIn'], " "))
-        {
-            $thisSowMonthIn = str_replace(" ", "<br>", $thisplant['PSowMonthIn']);
-        }
-        else
-        {
-            $thisSowMonthIn = $thisplant['PSowMonthIn'];
-        }
-        
-        if(strpos($thisplant['PSowMonthOut'], " "))
-        {
-            $thisSowMonthOut = str_replace(" ", "<br>", $thisplant['PSowMonthOut']);
-        }
-        else
-        {
-            $thisSowMonthOut = $thisplant['PSowMonthOut'];
-        }     
+        // Otherwise just copy that one month to variable $thisSowMonthIn
+        $thisSowMonthIn = $thisPlant['PSowMonthIn'];
     }
+    
+    // If there are more than one month in the field PSowMonthOut (there will be a space if this is the case)
+    if(strpos($thisPlant['PSowMonthOut'], " "))
+    {
+        // Replace spaces with <br> and put in variable $thisSowMonthOut to get new line between each month
+        $thisSowMonthOut = str_replace(" ", "<br>", $thisPlant['PSowMonthOut']);
+    }
+    else
+    {
+        // Otherwise just copy that one month to variable $thisSowMonthOut
+        $thisSowMonthOut = $thisPlant['PSowMonthOut'];
+    }     
 ?>
 
 <body class="container-xxl">
-    <form method="post" action="<?php echo($_SESSION['PHP_SELF']); ?>">
+    <!-- When pressing a button this page loads plant.php with the current plant ID and all data entered in fields is transfered to $_POST -->
+    <form method="post" action="<?php echo("plant.php?id={$thisPlant['PID']}"); ?>">
         <div class="card">
 
             <div class="col card-header">
-                <div class="position-absolute w-100 text-black-50 fst-italic"><i class="far fa-edit"></i> Redigerer - klik på det, du ønsker at ændre...<span class="ms-5"><a href="plant.php?changed=1&id=<?php echo($thisplant['PID']); ?>" class="text-decoration-none text-success"><i class="far fa-save"></i> Klik for at gemme</a></span><span class="ms-5"><a href="plant.php?changed=0&id=<?php echo($thisplant['PID']); ?>" class="text-decoration-none text-danger"><i class="fas fa-undo"></i> Klik for at fortryde og gå tilbage</a></span></div>
-                <input type="text" name="InPName" class="form-control-plaintext card-title display-2" value="<?php echo($thisplant['PName']); ?>">
-                <input type="text" name="InPBotName" class="form-control-plaintext card-subtitle display-6" value="<?php echo($thisplant['PBotName']); ?>">
+                <div class="position-absolute w-100 text-black-50 fst-italic">
+                    <i class="far fa-edit"></i> Redigerer - klik på det, du ønsker at ændre...
+                    <span class="ms-5 w-25">
+                        <input type="submit" name="change" value="Gem" class="btn btn-success">
+                    </span>
+                    <span class="ms-5 w-25">
+                        <input type="submit" name="cancel" value="Fortryd" class="btn btn-warning">
+                    </span>
+                    <span class="ms-5 w-25">
+                        <input type="submit" name="delete" value="Slet plante" class="btn btn-danger">
+                    </span>
+                </div>
+                
+                <input type="text" name="PName" class="form-control-plaintext card-title display-2" value="<?php echo($thisPlant['PName']); ?>">
+                <input type="text" name="PBotName" class="form-control-plaintext card-subtitle display-6" value="<?php echo($thisPlant['PBotName']); ?>">
             </div>
 
             <section class="row card-body">
                 <article class="col-3">
                     <?php
-                        echo("<img src='img/{$thisplant['PImage']}' class='card-img w-100'>");
+                        echo("<img src='img/{$thisPlant['PImage']}' class='card-img w-100'>");
                     ?>
                 </article>
                 <article class="col">
@@ -58,7 +68,7 @@
                             <p class="fw-bold">Type</p>
                         </div>
                         <div class="col">
-                            <input type="text" name="InPType" class="form-control-plaintext card-subtitle" value="<?php echo($thisplant['PType']); ?>">
+                            <input type="text" name="PType" class="form-control-plaintext card-subtitle" value="<?php echo($thisPlant['PType']); ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -66,7 +76,7 @@
                             <p class="fw-bold">Højde</p>
                         </div>
                         <div class="col">
-                            <input type="text" name="InPHeight" class="form-control-plaintext card-subtitle" value="<?php echo($thisplant['PHeight'] . " cm"); ?>">
+                            <input type="text" name="PHeight" class="form-control-plaintext card-subtitle" value="<?php echo($thisPlant['PHeight'] . " cm"); ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -74,7 +84,7 @@
                             <p class="fw-bold">Såafstand</p>
                         </div>
                         <div class="col">
-                            <input type="text" name="InPSowDist" class="form-control-plaintext card-subtitle" value="<?php echo($thisplant['PSowDist'] . " cm"); ?>">
+                            <input type="text" name="PSowDist" class="form-control-plaintext card-subtitle" value="<?php echo($thisPlant['PSowDist'] . " cm"); ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -82,7 +92,7 @@
                             <p class="fw-bold">Rækkeafstand</p>
                         </div>
                         <div class="col">
-                            <input type="text" name="InPRowDist" class="form-control-plaintext card-subtitle" value="<?php echo($thisplant['PRowDist'] . " cm"); ?>">
+                            <input type="text" name="PRowDist" class="form-control-plaintext card-subtitle" value="<?php echo($thisPlant['PRowDist'] . " cm"); ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -90,7 +100,7 @@
                             <p class="fw-bold">Sådybde</p>
                         </div>
                         <div class="col">
-                            <input type="text" name="InPSowDepth" class="form-control-plaintext card-subtitle" value="<?php echo($thisplant['PSowDepth'] . " cm"); ?>">
+                            <input type="text" name="PSowDepth" class="form-control-plaintext card-subtitle" value="<?php echo($thisPlant['PSowDepth'] . " cm"); ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -98,7 +108,7 @@
                             <p class="fw-bold">Lysforhold</p>
                         </div>
                         <div class="col">
-                            <input type="text" name="InPLight" class="form-control-plaintext card-subtitle" value="<?php echo($thisplant['PLight']); ?>">
+                            <input type="text" name="PLight" class="form-control-plaintext card-subtitle" value="<?php echo($thisPlant['PLight']); ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -106,7 +116,7 @@
                             <p class="fw-bold">Forspiring</p>
                         </div>
                         <div class="col">
-                            <input type="text" name="InPSowMonthIn" class="form-control-plaintext card-subtitle" value="<?php echo($thisSowMonthIn); ?>">
+                            <input type="text" name="PSowMonthIn" class="form-control-plaintext card-subtitle" value="<?php echo($thisSowMonthIn); ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -114,7 +124,7 @@
                             <p class="fw-bold">Udplantning/såning på friland</p>
                         </div>
                         <div class="col">
-                            <input type="text" name="InPSowMonthOut" class="form-control-plaintext card-subtitle" value="<?php echo($thisSowMonthOut); ?>">
+                            <input type="text" name="PSowMonthOut" class="form-control-plaintext card-subtitle" value="<?php echo($thisSowMonthOut); ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -122,7 +132,7 @@
                             <p class="fw-bold">Spiring efter</p>
                         </div>
                         <div class="col">
-                            ca. <input type="text" name="InPGermDays" class="form-control-plaintext card-subtitle" value="<?php echo($thisplant['PGermDays'] . " dage"); ?>">
+                            ca. <input type="text" name="PGermDays" class="form-control-plaintext card-subtitle" value="<?php echo($thisPlant['PGermDays'] . " dage"); ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -130,7 +140,7 @@
                             <p class="fw-bold">Moden til høst efter</p>
                         </div>
                         <div class="col">
-                            ca. <input type="text" name="InPMatureDays" class="form-control-plaintext card-subtitle" value="<?php echo($thisplant['PMatureDays'] . " dage"); ?>">
+                            ca. <input type="text" name="PMatureDays" class="form-control-plaintext card-subtitle" value="<?php echo($thisPlant['PMatureDays'] . " dage"); ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -138,7 +148,7 @@
                             <p class="fw-bold">Beskrivelse</p>
                         </div>
                         <div class="col">
-                            <textarea name="InPDesc" class="form-control-plaintext card-subtitle"><?php echo($thisplant['PDesc']); ?></textarea>
+                            <textarea name="PDesc" class="form-control-plaintext card-subtitle"><?php echo($thisPlant['PDesc']); ?></textarea>
                         </div>
                     </div>
                 </article>

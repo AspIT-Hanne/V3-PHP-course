@@ -2,27 +2,39 @@
 
     include_once "includes/includes.php";
 
+    $dbconnection = new DbOperations();
 
-    $dbdata = $connection->query("SELECT * FROM planter");
-
-    if($connection->error)
-    {
-        echo($connection->error);
-    }
-    
+    $allData = $dbconnection->getAllData("planter");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <title>Gardendiary - plantbase</title>
-</head>
 <body class="container-xxl">
-    <h1 class="display-2">Plantedatabase</h1>
+    <?php
+        if(isset($_GET['delete']))
+            {
+                if($_GET['delete'] == "success")
+                {
+                ?>
+                    <div class="alert alert-success alert-dismissible fade show position-absolute w-50" role="alert">
+                        Planten blev slettet!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <?php
+                }
+                else
+                {?>
+                    <div class="alert alert-danger alert-dismissible fade show position-absolute w-50" role="alert">
+                        Noget gik galt. Planten er ikke slettet. Prøv igen eller kontakt en administrator!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <?php
+                }
+            }
+        ?>
+    <header class="row">
+        <h1 class="display-2 col-6 mb-5">Plantbase</h1>
+        <a href="newplant.php" class="col-6 text-end text-black-50"><h4><i class="fas fa-plus"></i> Add new</h4></a>
+    </header>
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -41,7 +53,7 @@
         <tbody>
         <?php
 
-            while($eachplant = $dbdata->fetch_assoc())
+            foreach ($allData as $eachplant)
             {
                 if(strpos($eachplant['PSowMonthIn'], " "))
                 {

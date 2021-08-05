@@ -6,6 +6,7 @@
     $currentpage = $temp[count($temp)-1];
     // divide filename and extension and move only filename to variable currentpage
     $currentpage = explode(".", $currentpage)[0]."active";
+    // set the variable of the current page to "active" - if current page is diary then $$currentpage is $diaryactive and this variable now contains the value "active" to use in adding the "active" css-class and style the current page as active for the user
     $$currentpage = "active";
 ?>
 
@@ -25,7 +26,7 @@
             <a class="nav-link <?php echo $calendaractive; ?>" href="calendar.php">Kalender</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?php echo $diaryactive; ?>" href="diary.php">Min havedagbog</a>
+            <a class="nav-link <?php echo $diaryactive; ?>" href="diaryIJTEST.php">Min havedagbog</a>
         </li>
     </ul>
 </nav>

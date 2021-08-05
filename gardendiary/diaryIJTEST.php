@@ -10,136 +10,7 @@
 
     $allData = $dbconnection->getAllData("plantekalender");
 
-    // if(isset($_GET['action']))
-    // {
-    //     if($_GET['action'] == "newentry")
-    //     {
-    //         $postKeys = array_keys($_POST);
-
-    //         foreach($postKeys as $thisfield)
-    //         {
-    //             $$thisfield = '"'.setValue($thisfield).'"';
-    //         }
-            
-    //         if(isset($_POST['InProp']))
-    //         {
-    //             $InProp = 1;
-    //             if(empty($_POST['InWPropDate']))
-    //             {
-    //                 $InWPropDate = "'{$today}'";
-    //             }
-    //             else
-    //             {
-    //                 $InWPropDate = "'{$_POST['InWPropDate']}'";
-    //             }   
-    //         }
-    //         else
-    //         {
-    //             $InProp = 0;
-    //             $InWPropDate = "NULL";
-
-    //             if(!empty($_POST['InSowDate']))
-    //             {
-    //                 $InSowDate = "'{$_POST['InSowDate']}'";
-    //             }
-    //             elseif(!isset($_POST['InProp']))
-    //             {
-    //                 $InSowDate = "'{$today}'";
-    //             }
-    //         }
-
-    //         if($connection->query( "INSERT INTO plantekalender (PID, CWPropagated, CWPropDate, CWRootDate, CSowDate, CFirstGermDate, CAllGermDate, CRePot1Date, CRePot2Date, CRePot3Date, CPlantOutDate, CTrellisDate, CFirstHarvestDate, CLastHarvestDate) VALUES ($inPlant, $InProp, $InWPropDate, $InWRootDate, $InSowDate, $InFirstGermDate, $InAllGermDate, $InRePot1Date, $InRePot2Date, $InRePot3Date, $InPlantOut, $InTrellis, $InFirstHarvest, $InLastHarvest)"))
-    //         {
-
-    //         }
-    //         else
-    //         {
-    //             echo("Insert did not succeed! " . $connection->error);
-    //         }
-    //     }
-    // }
-
-    // if(isset($_GET['action']) && $_GET['action'] == 'addednewnote')
-    // {
-    //     $postKeys = array_keys($_POST);
-
-    //     foreach($postKeys as $thisfield)
-    //     {
-    //         $$thisfield = '"'.setValue($thisfield).'"';
-    //     }
-
-
-    //     if(isset($_POST['InNoteCancel']) && empty($_POST['InNNote']))
-    //     {
-            
-    //     }
-    //     else
-    //     {
-    //         if($connection->query("INSERT INTO kalendernoter (CID, NDate, NNote) VALUES ({$_GET['cid']} , $InNDate , $InNNote)"))
-    //         {
-
-    //         }
-    //         else
-    //         {
-    //             echo("Insert did not succeed! " . $connection->error);
-    //         }
-    //     }
-    // }
-
-    // $sownplants = array();
-
-    // // Get all calendar entries that are not water propagations
-    // $dbdata1 = $connection->query("SELECT * FROM plantekalender WHERE CWPropDate IS NULL");
-    // // Get all calendar entries that are water propagations
-    // $dbdata2 = $connection->query("SELECT * FROM plantekalender WHERE CWPropDate IS NOT NULL");
-
-    // $noterdbdata = $connection->query("SELECT * FROM kalendernoter ORDER BY NDate DESC");
-
-    // // Put the two SQL-fetches into their own associative array
-    // while($currententry = $dbdata1->fetch_assoc())
-    // {   
-    //     $sownplants[] = $currententry;
-    // }
-
-    // while($currententry2 = $dbdata2->fetch_assoc())
-    // {
-    //     $propplants[] = $currententry2;
-    // }
-
-    // // Put the notes in their own associative array
-    // while($currentnote = $noterdbdata->fetch_assoc())
-    // {
-    //     $allnotes[] = $currentnote;
-    // }
-
-    // // If something went wrong with the connection
-    // if($connection->error)
-    // {
-    //     echo($connection->error);
-    // }
-
-    // // For all non-propagated plants move their sow date to propagation date to be able to sort all entries
-    // for($i = 0; $i < count($sownplants); $i++)
-    // {
-    //     $sownplants[$i]['CWPropDate'] = $sownplants[$i]['CSowDate'];
-    // }
-
-    // // Merge the two associative arrays into one array
-    // $allplants = array_merge($sownplants, $propplants);
-
-    // // Sort all entries by propagation date
-    // usort($allplants, function ($item1, $item2) {
-    //     return $item2['CWPropDate'] <=> $item1['CWPropDate'];
-    // });
-
-    // // Remove propagation date for those plants that aren't propagated but are sown
-    // for($i = 0; $i < count($allplants); $i++)
-    // {
-    //     if(!$allplants[$i]['CWPropagated'])
-    //     {
-    //         $allplants[$i]['CWPropDate'] = NULL;
-    //     }
-    // }
+    $allnotes = $dbconnection->getAllData("kalendernoter");
 ?>
 
 <body class="container-xxl">
@@ -167,11 +38,7 @@
             foreach($allData as $eachdiaryentry)
             {  
                 $thisPID = $eachdiaryentry['PID'];
-                $thisPlantInfo = $dbconnection->getDataByID("kalendernoter", $thisPID);
-
-                echo "<pre>";
-                print_r($allData);
-                echo "</pre>";
+                $thisPlantInfo = $dbconnection->getDataByID("planter", $thisPID);
 
                 $show = "";
 
