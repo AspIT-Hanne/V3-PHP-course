@@ -1,20 +1,7 @@
 <?php
-    $db = new MySQLi("localhost", "halu", "1234", "v3cms");
-    
-    if($db->connect_error) 
-    {
-        die("Connection to database failed: ". $db->connect_error);
-    }
-
-    $userErr = $pwErr = $repeatPwErr = $emailErr = "";     // Variables to contain error-messages
-
-    // Get data from postcode table - not yet used in code
-    $postcoderesult = $db->query("SELECT Postnr, Bynavn FROM postby");
-
     // Test if typed in passwords match
     function testpwmatch ($pw1, $pw2)
     {
-
         if ($pw1 == $pw2)
         {
             return true;
@@ -25,109 +12,123 @@
         }
     }
 
-    // Has user pressed submit button?
-    if ($_SERVER["REQUEST_METHOD"] == "POST") 
-    {
-        // Did user type a username?
-        if (empty($_POST["newuser-username"])) 
-        {
-            $userErr = "Username is required";
-        } 
-        else 
-        {
-            // Transfer username to SESSION variable
-            $_SESSION["newuser-username"] = test_input($_POST["newuser-username"]);
-        }
-      
-        // Did user type a password?
-        if (empty($_POST["newuser-password"])) {
-            $pwErr = "Password is required";
-        }
-        else
-        {
-            // Transfer password to SESSION variable
-            $_SESSION["newuser-password"] = test_input($_POST["newuser-password"]);   
-        }
-
-        // Did user type the repeat password?
-        if (empty($_POST["newuser-passwordrepeat"])) 
-        {
-            $repeatPwErr = "Please repeat password";
-        } 
-        else
-        {
-            // Do the two passwords match?
-            if (testpwmatch($_POST["newuser-password"], $_POST["newuser-passwordrepeat"]))
-            {
-                // Transfer repeated password to SESSION variable (is this even necessary?)
-                $_SESSION["newuser-passwordrepeat"] = test_input($_POST["newuser-passwordrepeat"]);
-            }
-
-            else
-            {
-                $repeatPwErr = "The two passwords do not match";
-            }
-        }
-
-        // Did user type an email?
-        if (empty($_POST["newuser-email"])) 
-        {
-            $emailErr = "Email address is required";
-        } 
-        else 
-        {
-            // Is the email a valid email format?
-            if (!filter_var($_POST["newuser-email"], FILTER_VALIDATE_EMAIL))
-            {
-                $emailErr = "Invalid email format";
-            }
-            else
-            {
-                // Transfer email to SESSION variable
-                $_SESSION["newuser-email"] = test_input($_POST["newuser-email"]);
-            } 
-        }
-
-        // Check if username, password, passwordrepeat and email are not empty and check if the passwords match - then we can start the insert-procedure into the database
-        if (!empty($_POST["newuser-username"]) && !empty($_POST["newuser-password"]) && !empty($_POST["newuser-passwordrepeat"]) && !empty($_POST["newuser-email"]) && testpwmatch($_POST["newuser-password"], $_POST["newuser-passwordrepeat"]))
-        {
-            // Put apostrophes around username so it can be used in SELECT statement
-            $username = "'" . $_POST["newuser-username"] . "'";
-            // Check if there is already a user in database with the same username
-            $result = $db->query("SELECT * FROM edeausers WHERE Username = $username");
-
-            if ($db->error) // Did SQL query return an error?
-            {
-                echo $db->error;
-            }
-            // If SQL query returns no rows this username is not in the database and new user can be inserted into database
-            else if ($result->num_rows == 0)
-            { 
-                if($db->query("INSERT INTO edeausers (Username, Password, Priviledge, Firstname, Lastname, Address, Postcode, Country, Email, Website) VALUE ('{$_POST['newuser-username']}', '{$_POST['newuser-password']}', '{$_POST['newuser-priviledge']}', '{$_POST['newuser-firstname']}', '{$_POST['newuser-lastname']}'
-                , '{$_POST['newuser-address']}', '{$_POST['newuser-postcode']}', '{$_POST['newuser-country']}', '{$_POST['newuser-email']}', '{$_POST['newuser-website']}')"))
-                {
-                    // Redirect to landing page for new users
-                    header("Location: newuser-landing.php");
-                }
-                else
-                {
-                    echo "Brugeroprettelse lykkedes ikke";
-                }
-            }
-            else
-            {
-                // Username already exists in database - redirect to error-message and login form
-                header("Location: alreadyuser.php");
-            }
-        }
-    }
-
     function test_input($data) {
         $data = trim($data);                // Strips data of unnecessary characters (newline, tab, extra spaces)
         $data = stripslashes($data);        // Strips data of backslashes
         $data = htmlspecialchars($data);    // Changes HTML-characters to HTML encoded entities (&lt; < &gt; >)
         return $data;
       }
+    
+    $db = new MySQLi("localhost", "halu", "1234", "v3cms");
+    
+    if($db->connect_error) 
+    {
+        die("Connection to database failed: ". $db->connect_error);
+    }
+    else
+    {
+        $userErr = $pwErr = $repeatPwErr = $emailErr = "";     // Variables to contain error-messages
+
+        // Has user pressed submit button?
+        if ($_SERVER["REQUEST_METHOD"] == "POST") 
+        {
+            // Did user type a username?
+            if (empty($_POST["newuser-username"])) 
+            {
+                $userErr = "Indtast venligst et brugernavn!";
+            } 
+            else 
+            {
+                // Transfer username to SESSION variable
+                $_SESSION["newuser-username"] = test_input($_POST["newuser-username"]);
+            }
+        
+            // Did user type a password?
+            if (empty($_POST["newuser-password"])) {
+                $pwErr = "Indtast venligst en adgangskode!";
+            }
+            else
+            {
+                // Transfer password to SESSION variable
+                $_SESSION["newuser-password"] = test_input($_POST["newuser-password"]);   
+            }
+
+            // Did user type the repeat password?
+            if (empty($_POST["newuser-passwordrepeat"])) 
+            {
+                $repeatPwErr = "Indtast venligst adgangskode igen!";
+            } 
+            else
+            {
+                // Do the two passwords match?
+                if (testpwmatch($_POST["newuser-password"], $_POST["newuser-passwordrepeat"]))
+                {
+                    // Transfer repeated password to SESSION variable (is this even necessary?)
+                    $_SESSION["newuser-passwordrepeat"] = test_input($_POST["newuser-passwordrepeat"]);
+                }
+
+                else
+                {
+                    $repeatPwErr = "De to indtastede adgangskoder er ikke ens, fjols!";
+                }
+            }
+
+            // Did user type an email?
+            if (empty($_POST["newuser-email"])) 
+            {
+                $emailErr = "Indtast venligst en mail-adresse!";
+            } 
+            else 
+            {
+                // Is the email a valid email format?
+                if (!filter_var($_POST["newuser-email"], FILTER_VALIDATE_EMAIL))
+                {
+                    $emailErr = "Indtast venligst en korrekt mail-adresse, spasser. Tak!";
+                }
+                else
+                {
+                    // Transfer email to SESSION variable
+                    $_SESSION["newuser-email"] = test_input($_POST["newuser-email"]);
+                } 
+            }
+
+            // Check if username, password, passwordrepeat and email are not empty and check if the passwords match - then we can start the insert-procedure into the database
+            // If I had put all above code into the else-statements then I wouldn't need this extra control. But so many nested else-statements are difficult to read which is why I chose this solution
+            if (!empty($_POST["newuser-username"]) && !empty($_POST["newuser-password"]) && !empty($_POST["newuser-passwordrepeat"]) && !empty($_POST["newuser-email"]) && testpwmatch($_POST["newuser-password"], $_POST["newuser-passwordrepeat"]))
+            {
+                // Put apostrophes around username so it can be used in SELECT statement
+                $username = "'" . $_POST["newuser-username"] . "'";
+                // Check if there is already a user in database with the same username
+                $result = $db->query("SELECT * FROM edeausers WHERE Username = $username");
+
+                if ($db->error) // Did SQL query return an error?
+                {
+                    echo $db->error;
+                }
+                // If SQL query returns no rows this username is not in the database and new user can be inserted into database
+                else if ($result->num_rows == 0)
+                { 
+                    if($db->query("INSERT INTO edeausers (Username, Password, Priviledge, Firstname, Lastname, Address, Postcode, Country, Email, Website) VALUE ('{$_POST['newuser-username']}', '{$_POST['newuser-password']}', '{$_POST['newuser-priviledge']}', '{$_POST['newuser-firstname']}', '{$_POST['newuser-lastname']}'
+                    , '{$_POST['newuser-address']}', '{$_POST['newuser-postcode']}', '{$_POST['newuser-country']}', '{$_POST['newuser-email']}', '{$_POST['newuser-website']}')"))
+                    {
+                        // Redirect to landing page for new users
+                        header("Location: newuser-landing.php");
+                    }
+                    else
+                    {
+                        echo "Brugeroprettelse lykkedes ikke";
+                    }
+                }
+                else
+                {
+                    // Username already exists in database - redirect to error-message and login form
+                    header("Location: alreadyuser.php");
+                }
+            }
+        }
+    }
+
+    
 ?>
 
 <!DOCTYPE html>

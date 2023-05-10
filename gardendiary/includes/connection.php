@@ -50,6 +50,18 @@
             }
         }
 
+        public function getSortedData($table, $sortBy)
+        {
+            if ($this->tableExists($table))
+            {
+                // Call function to retrieve data from table with the "ORDER BY" statement that sorts the data by the desired field
+                $dataResult = $this->getData($table, "*", null, null, $sortBy);
+
+                // getData-method returns multidimensional associative array, but caller only expects one result, so return only one dimension of the array by returning only the data on the first line
+                return $dataResult[0];
+            }
+        }
+
         // Method to create new post/insert data into MySQL table. $data=array() argument creates an empty array as default value if no array argument is passed to the method
         public function insertData($table, $data=array())
         {

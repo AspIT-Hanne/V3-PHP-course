@@ -25,7 +25,7 @@
             {
                 // If you entered both username and password move the value to the $_SESSION variable so you can use this as documentation from now on and then redirect the user to the frontpage
                 $_SESSION["login-submit"] = $_POST["login-submit"];
-                header("location: opgave13.php");
+                // header("location: opgave13.php");
             }
         }
         // If user didn't enter anything into the password-field

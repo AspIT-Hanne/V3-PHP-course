@@ -3,14 +3,16 @@
     { 
         session_start(); 
     }
+
+    $siteroot = "/v31/";
 ?>
 
 <nav class="side">
     <a href="index.php"><img src="img/edea-skates-logo.png" alt="Edea logo"></a>
     <ul>
-        <li><a href="index.php">Forside</a></li>
-        <li><a href="shop.php">Shop</a></li>
-        <li><a href="omos.php">Om os</a></li>
+        <li><a href="<?=$siteroot;?>index.php">Forside</a></li>
+        <li><a href="<?=$siteroot;?>shop.php">Shop</a></li>
+        <li><a href="<?=$siteroot;?>omos.php">Om os</a></li>
         <?php 
             if (isset($_SESSION['login-submit']))
             {

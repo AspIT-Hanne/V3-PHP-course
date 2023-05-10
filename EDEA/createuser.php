@@ -107,6 +107,7 @@
                 , '{$_POST['newuser-address']}', '{$_POST['newuser-postcode']}', '{$_POST['newuser-country']}', '{$_POST['newuser-email']}', '{$_POST['newuser-website']}')"))
                 {
                     header("Location: newuser-landing.php");
+                    // echo("<script>window.location.replace('newuser-landing.php')</script>");
                 }
                 else
                 {

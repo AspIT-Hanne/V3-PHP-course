@@ -15,10 +15,10 @@
         // Put ' ' around login-username to use as comparison in SQL Select statement
         $username = "'" . $_SESSION["login-username"] . "'";
         // Create database connection. Returns MySQLi object.
-        $db = new MySQLi("localhost", "halu", "1234", "v3cms");
+        $db = new MySQLi("localhost", "halu_cms", "bbOFmqoDg,X-", "halu_v31cms");
 
         // Define targe-directory for uploaded files
-        $imageDir = "C:\Users\halu\code\php\cms\img\\";
+        $imageDir = "img\\";
         // Initialise array to hold error-messages related to file-upload
         $imageErr[] = "";
 
@@ -39,10 +39,10 @@
                     $imageFileName = basename($noSpaceString[$i]);
                     // Combine the path for image uploads with the image filename
                     $imageFullPath = $imageDir . $imageFileName;
+
                     // Check if file was moved correctly from $imageTmp to $imageFullPath
-                    if(move_uploaded_file($imageTmp, $imageFullPath))
+                    if(move_uploaded_file($imageTmp, "img/".$imageFileName))
                     {
-                        
                         $imageErr[$i] = 0; // If move was successfull errormessage is 0
                     }
                     else
@@ -73,44 +73,26 @@
         }
         else // If connection to database succeeded
         {
-            // Get information about current logged in user from database (basically just double checking that user is in the database). Returns MySQLi-result object.
-            $resultuser = $db->query("SELECT * FROM edeausers WHERE Username = $username");
+            // Initialise array to contain (possible) multiple values from select-field "newproduct-supports"
+            $prodSupports = array();
 
-            // Check if SQL query succeeded
-            if ($db->error) // If SQL query failed
-                {
-                    echo $db->error;
-                }
-                else // If SQL query succeeded
-                {
-                    // Transfer MySQLi-result object to array (that we can work on/with)
-                    $row = $resultuser->fetch_assoc();
-
-                    // Get username to add to new product
-                    $newProductCreatedBy = $row['Username'];
-                    // Get date to add to new product
-                    $newProductCreatedDate = date('Y-m-d');
-
-                    // Initialise array to contain (possible) multiple values from select-field "newproduct-supports"
-                    $prodSupports = array();
-
-                    // If the user selected one or more values in select-field "newproduct-supports"
-                    if(!empty($_POST['newproduct-supports']))
-                    {
-                        // Convert the values selected from array to string
-                        $prodSupportsString = implode(" ", $_POST['newproduct-supports']);
-                    }
-                    // Do SQL query to insert data from form fields (and a few others) into table "products"
-                    // Test if SQL query succeeded
-                    if($db->query("INSERT INTO products (ProdImage, ProdName, ProdStars, ProdShortDesc, ProdLongDesc, ProdStiff, ProdSupports, ProdPrice, ProdStock, ProdCreatedBy, ProdCreatedDate) VALUE ('{$prodImagesString}', '{$_POST['newproduct-name']}', '{$_POST['newproduct-stars']}', '{$_POST['newproduct-shortdesc']}', '{$_POST['newproduct-longdesc']}', '{$_POST['newproduct-stiff']}', '{$prodSupportsString}', '{$_POST['newproduct-price']}', '{$_POST['newproduct-stock']}', '{$newProductCreatedBy}', '{$newProductCreatedDate}')"))
-                        {
-                            $errormessage = "Produktoprettelse lykkedes.";
-                        }
-                        else
-                        {
-                            $errormessage = "Produktoprettelse lykkedes ikke: ".$db->error;
-                        }
-                }
+            // If the user selected one or more values in select-field "newproduct-supports"
+            if(!empty($_POST['newproduct-supports']))
+            {
+                // Convert the values selected from array to string
+                $prodSupportsString = implode(" ", $_POST['newproduct-supports']);
+            }
+            // Do SQL query to insert data from form fields (and a few others) into table "products"
+            // Test if SQL query succeeded
+            if($db->query("INSERT INTO products (PPic, PName, PStars, PDesc, PStiff, PSupp, PPrice, PStock) VALUE ('{$prodImagesString}', '{$_POST['newproduct-name']}', '{$_POST['newproduct-stars']}', '{$_POST['newproduct-longdesc']}', '{$_POST['newproduct-stiff']}', '{$prodSupportsString}', '{$_POST['newproduct-price']}', '{$_POST['newproduct-stock']}')"))
+            {
+                $errormessage = "Produktoprettelse lykkedes.";
+                echo ("<script>window.location.replace('index.php')</script>");
+            }
+            else
+            {
+                $errormessage = "Produktoprettelse lykkedes ikke: ".$db->error;
+            }
         }
     }
 ?>
@@ -128,6 +110,7 @@
         include "includes/topmenu.php";
 
         include "includes/sidemenu.php";
+
     ?>
 
     <div class="content">
@@ -160,13 +143,8 @@
                 </p>
                 
                 <p>
-                    <label for="newproduct-longdesc">Lang beskrivelse: </label>
-                    <input type="text" name="newproduct-longdesc" placeholder="Lang beskrivelse">
-                </p>
-
-                <p>
-                    <label for="newproduct-shortdesc">Kort beskrivelse: </label>
-                    <input type="text" name="newproduct-shortdesc" placeholder="Kort beskrivelse">
+                    <label for="newproduct-longdesc">Beskrivelse: </label>
+                    <input type="text" name="newproduct-longdesc" placeholder="Beskrivelse">
                 </p>
 
                 <p>

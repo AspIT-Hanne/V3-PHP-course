@@ -1,7 +1,7 @@
 <?php
     // Connect to userdatabase
 
-    $db = new MySQLi("localhost", "halu", "1234", "v3cms");
+    $db = new MySQLi("localhost", "halu_cms", "bbOFmqoDg,X-", "halu_v31cms");
     
     if($db->connect_error) 
     {
@@ -46,7 +46,8 @@
                 if ($row['Password'] == $_POST['login-password'])
                 {
                     $_SESSION["login-submit"] = $_POST["login-submit"];
-                    header("Location: index.php");
+                    echo ("<script>window.location.replace('index.php')</script>");
+                    // header("Location: index.php");
                 }
                 else
                 {

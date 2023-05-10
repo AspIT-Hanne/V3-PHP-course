@@ -6,7 +6,7 @@
 
     $i = 0;
 
-    $db = new MySQLi("localhost", "halu", "1234", "v3cms");
+    $db = new MySQLi("localhost", "halu_cms", "bbOFmqoDg,X-", "halu_v31cms");
         
         if($db->connect_error) 
         {
@@ -14,7 +14,7 @@
         }
         else
         {
-            $result = $db->query("SELECT * FROM products");
+            $result = $db->query("SELECT * FROM products ORDER BY PID DESC LIMIT 3");
 
             if($db->error)
             {
@@ -22,18 +22,9 @@
             }
             else
             {
-                if($result->num_rows < 6)
-                {
-                    $numberofproducts = $result->num_rows;
-                }
-                else
-                {
-                    $numberofproducts = 6;
-                }
-
                 while($row = $result->fetch_assoc())
                 {
-                    if($i < 6)
+                    if($i < 3)
                     {
                         $products[] = $row;
 
@@ -75,7 +66,16 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Edea skates</title>
 </head>
-<body>
+<body class="
+    <?php if($currentMinute % 2 == 0) 
+        {
+            echo 'light';
+        }
+        else 
+        {
+            echo 'dark';
+            } 
+    ?> ">
     <?php 
         include "includes/topmenu.php";
 
@@ -123,10 +123,10 @@
                 <h2>Udvalgte produkter:</h2>
                 <div class="products">
                 <?php 
-                    for($j = 0; $j < $numberofproducts ; $j++)
+                    for($j = 0; $j < count($products) ; $j++)
                     {?>
                         <article>
-                            <img src="img/<?php echo $products[$j]['PPic']; ?>" alt="Piano Edea skate">
+                            <img src="img/<?php echo $products[$j]['PPic']; ?>" alt="Edea skate">
                             <h3><?php echo $products[$j]['PName']; ?></h3>
                             <p>Antal stjerner: <?php echo $products[$j]['PStars']; ?></p>
                             <p>Beskrivelse:</p>

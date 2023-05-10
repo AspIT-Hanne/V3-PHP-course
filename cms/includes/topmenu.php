@@ -7,10 +7,10 @@
 
 <nav class="top">
     <ul>
-        <li><a href="#"><img src="img/facebookIcon-bw.png" alt="Facebook logo"></a></li>
-        <li><a href="#"><img src="img/instagramIcon-bw.png" alt="Instagram logo"></a></li>
-        <li><a href="#"><img src="img/twitterIcon-bw.png" alt="Twitter logo"></a></li>
-        <li><a href="#"><img src="img/youtubeIcon-bw.png" alt="YouTube logo"></a></li>
+        <li><a href="#"><img src="img/FacebookIcon-bw.png" alt="Facebook logo"></a></li>
+        <li><a href="#"><img src="img/InstagramIcon-bw.png" alt="Instagram logo"></a></li>
+        <li><a href="#"><img src="img/TwitterIcon-bw.png" alt="Twitter logo"></a></li>
+        <li><a href="#"><img src="img/YoutubeIcon-bw.png" alt="YouTube logo"></a></li>
         <?php 
             if (isset($_SESSION['login-submit']))
             {

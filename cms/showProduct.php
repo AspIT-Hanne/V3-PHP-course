@@ -8,7 +8,7 @@
     {
         $id = $_GET['id'];
 
-        $db = new MySQLi("localhost", "halu", "1234", "v3cms");
+        $db = new MySQLi("localhost", "halu_cms", "bbOFmqoDg,X-", "halu_v31cms");
 
         if($db->connect_error) 
         {

@@ -14,6 +14,7 @@
         <?php 
             if (isset($_SESSION['login-submit']))
             {
+                echo "<li><a href='createProduct.php'>Opret produkt</a></li>";
                 echo "<li><a href='logout.php'>Log ud</a></li>";
             }
             else
