@@ -9,7 +9,7 @@
         <h2 class="mb-4">Nyeste opskrifter</h2>
         <section class="row g-4 mb-4">
             <article class="col-lg-4">
-                <div class="card h-100">
+                <a href="opskrift.php" class="card h-100">
                     <div class="card-header bg-success-subtle">
                         <h5 class="card-title">Møllehjul</h5>
                     </div>
@@ -25,7 +25,7 @@
                     <div class="card-footer bg-success-subtle fst-italic">
                         <p>Oprettet d. 15/9-2025 af Moster Hanne</p>
                     </div>
-                </div>
+                </a>
             </article>
             <article class="col-lg-4">
                 <div class="card h-100">

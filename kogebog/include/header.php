@@ -22,6 +22,9 @@
                     <a class="nav-link" href="andet.php">Andet</a>
                 </li>
             </ul>
+            <span class="nav-item">
+                <a href="login.php" class="nav-link">Login</a>
+            </span>
         </div>
     </div>
 </nav>
