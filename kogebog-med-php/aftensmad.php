@@ -1,4 +1,9 @@
+<?php
+    require_once 'include/head.php';
+
+?>
   <body class="min-vh-100 bg-light d-flex flex-column">
+    <?php include 'include/header.php'; ?>
     
     <main class="container my-5 flex-grow-1">
         <h2 class="mb-4">Nyeste opskrifter</h2>
@@ -25,5 +30,6 @@
         </section>
     </main>
 
+    <?php require_once 'include/footer.php'; ?>
   </body>
 </html>

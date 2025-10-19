@@ -1,4 +1,7 @@
+<?php
+    require_once 'include/head.php';
 
+?>
   <body class="min-vh-100 bg-light d-flex flex-column">
     <?php include 'include/header.php'; ?>
 
@@ -17,6 +20,8 @@
             <input type="submit" class="btn bg-success text-white" name="Login_submit" value="Log ind">
         </form>
     </main>
+
+    <?php require_once 'include/footer.php'; ?>
 
 </body>
 </html>
