@@ -1,4 +1,8 @@
+<?php 
+  session_start();
 
+  require_once 'include/connect.php';
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,3 +15,5 @@
     crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
   </head>
+  <pre> <?php var_dump($_SESSION); ?> </pre>
+  <pre> Session status: <?php echo session_status(); ?> </pre>

@@ -21,12 +21,22 @@
                 <li class="nav-item mx-md-3">
                     <a class="nav-link" href="andet.php">Andet</a>
                 </li>
+                <?php if(isset($_SESSION['username'])) { ?>
                 <li class="nav-item mx-md-3">
                     <a class="nav-link" href="nyopskrift.php">Opret opskrift</a>
+                </li>
+            <?php } ?>
+                
             </ul>
-            <span class="nav-item">
-                <a href="login.php" class="nav-link">Login</a>
-            </span>
+            <?php if(isset($_SESSION['username'])) { ?>
+                <span class="nav-item">
+                    <a href="logout.php" class="nav-link">Logout</a>
+                </span>
+            <?php } else { ?>
+                <span class="nav-item">
+                    <a href="login.php" class="nav-link">Login</a>
+                </span>
+            <?php } ?>
         </div>
     </div>
 </nav>
