@@ -2,7 +2,7 @@
     <h1 class="display-3 position-absolute top-50 start-50 translate-middle text-center fw-semibold">Moster Hannes Køkkenfiflerier</h1>
 </header>
 
-<nav class="navbar navbar-expand-lg bg-success-subtle text-end">
+<nav class="navbar navbar-expand-lg bg-<?=$background;?>-subtle text-end">
     <div class="container-fluid justify-content-end">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

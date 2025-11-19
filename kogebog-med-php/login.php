@@ -26,7 +26,7 @@
                 <input type="password" class="form-control <?php if($error === 'invalidpassword'){ echo 'is-invalid" autofocus';} ?> id="password" name="password" required>
                 <?php if($error === 'invalidpassword') echo '<div class="invalid-feedback">Adgangskoden er forkert.</div>'; ?>
             </div>
-            <input type="submit" class="btn bg-success text-white" name="Login_submit" value="Log ind">
+            <input type="submit" class="btn bg-<?=$background;?> text-white" name="Login_submit" value="Log ind">
         </form>
     </main>
 

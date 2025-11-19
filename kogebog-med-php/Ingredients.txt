@@ -1,0 +1,26 @@
+            <div class="mb-3 row" id="ingredientContainer">
+                <label for="recipeIngredients" class="col-form-label col-md-2">Ingredienser</label>
+                <div class="col-md-10 row pe-0">
+                    <div class="col-2">
+                        <input type="text" class="form-control" id="ingrAmount1" name="ingrAmount1" placeholder="Mængde" required>
+                    </div>
+                    <div class="col-2">
+                        <select name="ingrUnit1" id="ingrUnit1" class="form-select" required>
+                            
+                            <option value="g">gram</option>
+                            <option value="kg">kilo</option>
+                            <option value="ml">milliliter</option>
+                            <option value="dl">deciliter</option>
+                            <option value="liter">liter</option>
+                            <option value="knivspids">knivspids</option>
+                            <option value="stk">stk</option>
+                            <option value="tsk">teskefuld</option>
+                            <option value="spsk">spiseskefuld</option>
+                        </select>
+                    </div>
+                    <div class="col-8 pe-0">
+                        <input type="text" class="form-control" id="ingrName1" name="ingrName1" placeholder="Ingrediens" required>
+                    </div>
+                </div>
+                
+            </div>

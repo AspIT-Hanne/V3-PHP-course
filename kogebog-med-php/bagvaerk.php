@@ -32,7 +32,7 @@
                 
                 <!-- Elements for smaller screens -->
                 <div class="h-100 d-md-none">
-                    <div class="card-header bg-success-subtle">
+                    <div class="card-header bg-<?=$background;?>-subtle">
                         <h5 class="card-title">Møllehjul</h5>
                     </div>
                     <div class="card-body">
@@ -44,7 +44,7 @@
                     <ul class="list-group border-top list-group-flush">
                         <li class="list-group-item">Kategori: Bagværk</li>
                     </ul>
-                    <div class="card-footer border-top bg-success-subtle fst-italic">
+                    <div class="card-footer border-top bg-<?=$background;?>-subtle fst-italic">
                         <p>Oprettet d. 15/9-2025 af Moster Hanne</p>
                     </div>
                 </div> 
@@ -73,7 +73,7 @@
                 </div>
                 <!-- Elements for smaller screens -->
                 <div class="h-100 d-md-none">
-                    <div class="card-header bg-success-subtle">
+                    <div class="card-header bg-<?=$background;?>-subtle">
                         <h5 class="card-title">Sønderjysk Rugbrød</h5>
                     </div>
                     <div class="card-body">
@@ -85,7 +85,7 @@
                     <ul class="list-group border-top list-group-flush">
                         <li class="list-group-item">Kategori: Bagværk</li>
                     </ul>
-                    <div class="card-footer border-top bg-success-subtle fst-italic">
+                    <div class="card-footer border-top bg-<?=$background;?>-subtle fst-italic">
                         <p>Oprettet d. 30/8-2025 af Moster Hanne</p>
                     </div>
                 </div> 
@@ -117,7 +117,7 @@
                 
                 <!-- Elements for smaller screens -->
                 <div class="h-100 d-md-none">
-                    <div class="card-header bg-success-subtle">
+                    <div class="card-header bg-<?=$background;?>-subtle">
                         <h5 class="card-title">Hvidløgsflutes</h5>
                     </div>
                     <div class="card-body">
@@ -129,7 +129,7 @@
                     <ul class="list-group border-top list-group-flush">
                         <li class="list-group-item">Kategori: Bagværk</li>
                     </ul>
-                    <div class="card-footer border-top bg-success-subtle fst-italic">
+                    <div class="card-footer border-top bg-<?=$background;?>-subtle fst-italic">
                         <p>Oprettet d. 30/8-2025 af Moster Hanne</p>
                     </div>
                 </div> 

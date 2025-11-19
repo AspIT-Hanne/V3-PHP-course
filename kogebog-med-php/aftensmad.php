@@ -10,7 +10,7 @@
         <section class="row g-4 mb-4">
             <article class="col-md-4">
                 <div class="card h-100">
-                    <div class="card-header bg-success-subtle">
+                    <div class="card-header bg-<?=$background;?>-subtle">
                         <h5 class="card-title">Smash burger</h5>
                     </div>
                     <div class="card-body">
@@ -22,7 +22,7 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Kategori: Aftensmad</li>
                     </ul>
-                    <div class="card-footer bg-success-subtle fst-italic">
+                    <div class="card-footer bg-<?=$background;?>-subtle fst-italic">
                         <p>Oprettet d. 22/8-2025 af Moster Hanne</p>
                     </div>
                 </div>

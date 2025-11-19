@@ -2,6 +2,16 @@
   session_start();
 
   require_once 'include/connect.php';
+
+  $background = '';
+
+  if(date('m') > 2 && date('m') < 10){
+    $background = 'success';
+  } elseif(date('m') > 9 && date('m') < 12){
+    $background = 'danger';
+  } else {
+    $background = 'info';
+  }
 ?>
 <!doctype html>
 <html lang="en">
@@ -15,5 +25,3 @@
     crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
   </head>
-  <pre> <?php var_dump($_SESSION); ?> </pre>
-  <pre> Session status: <?php echo session_status(); ?> </pre>

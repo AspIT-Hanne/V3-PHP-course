@@ -26,6 +26,10 @@ $options = [
     
     // Deaktiver emulerede forberedte statements.
     // Brug af ægte forberedte statements forhindrer SQL Injection og forbedrer ydeevnen.
+    // Eksempel på SQL Injection uden forberedte statements:
+    // SELECT * FROM users WHERE username = '$_POST['username']'
+    // $_POST['username'] = "' OR '1'='1"
+    // SELECT * FROM users WHERE username = '' OR '1'='1' -- Dette vil returnere den første bruger, som sandsynligvis er admin-brugeren.
     PDO::ATTR_EMULATE_PREPARES   => false,
     
     // Sæt standard fetch mode til at returnere et associative array
@@ -43,7 +47,7 @@ try {
     $dbcon = new PDO($dsn, DB_USER, DB_PASS, $options);
     
     // Valgfrit: Output for at bekræfte forbindelse. Når du er sikker på, at det virker, kan du fjerne denne linje.
-    echo "Forbindelse oprettet med succes!";
+    // echo "Forbindelse oprettet med succes!";
     
 } catch (\PDOException $e) {
     // Fanger kun PDO Exceptions

@@ -1,4 +1,4 @@
-<footer class="bg-success-subtle py-3">
+<footer class="bg-<?=$background;?>-subtle py-3">
     <p class="text-center">&copy; 2025 Moster Hannes Køkkenfiflerier</p>
 </footer>
 

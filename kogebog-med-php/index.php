@@ -1,6 +1,16 @@
 <?php
     require_once 'include/head.php';
 
+    $sql = "SELECT * FROM recipe";
+
+    $stmt = $dbcon->prepare($sql);
+    
+    $stmt->execute();
+    
+    $result = $stmt->fetchAll();
+
+    
+
 ?>
   <body class="min-vh-100 bg-light d-flex flex-column">
     <!-- Body er lavet med minimum højde på 100 viewport height, og som lodret flexbox, så main-området kan udvides til at fylde hele højden -->
@@ -9,106 +19,42 @@
     <main class="container my-5 flex-grow-1">
         <!-- Main indholdet er lavet som en bootstrap container, der har en margin i top og bund på 5 og en flex-grow på 1, så den kan udvide sig til at fylde hele højden, hvis siden i sig selv ikke fylder hele højden (som fx login.php) -->
         <h2 class="mb-4">Nyeste opskrifter</h2>
-        <section class="row g-4 mb-4">
-            <article class="col-lg-4">
-                <a href="opskrift.php" class="card h-100">
-                    <div class="card-header bg-success-subtle">
-                        <h5 class="card-title">Møllehjul</h5>
-                    </div>
-                    <div class="card-body">
-                        <img src="img/recipeMollehjul.jpg" class="card-img" alt="Mollehjul">
-                        <p class="card-text mt-3">
-                            De sprøde og luftige hjemmebagte møllehjul er ligeså gode - eller måske endda bedre - end dem, du køber hos bageren.
-                        </p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <!-- Kategorien er oprettet som list-group for at få det opdelt med ramme øverst og nederst -->
-                        <li class="list-group-item">Kategori: Bagværk</li>
-                    </ul>
-                    <div class="card-footer bg-success-subtle fst-italic">
-                        <p>Oprettet d. 15/9-2025 af Moster Hanne</p>
-                    </div>
-                </a>
-            </article>
-            <article class="col-lg-4">
-                <div class="card h-100">
-                    <div class="card-header bg-success-subtle">
-                        <h5 class="card-title">Hyldeblomstsaft</h5>
-                    </div>
-                    <div class="card-body">
-                        <img src="img/recipeHyldeblomstsaft.jpg" class="card-img" alt="Hyldeblomstsaft">
-                        <p class="card-text mt-3">
-                           Helt utrolig frisk og dejlig opskrift på hyldeblomst saft. Bevar sommerens friske drik helt til næste år (eller hvor længe den nu kan få lov at stå i fred!)
-                        </p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Kategori: Andet</li>
-                    </ul>
-                    <div class="card-footer bg-success-subtle fst-italic">
-                        <p>Oprettet d. 7/9-2025 af Moster Hanne</p>
-                    </div>
-                </div>
-            </article>
-            <article class="col-lg-4">
-                <div class="card h-100">
-                    <div class="card-header bg-success-subtle">
-                        <h5 class="card-title">Sønderjysk rugbrød</h5>
-                    </div>
-                    <div class="card-body">
-                        <img src="img/recipeSdrjyskRugbrod.jpg" class="card-img" alt="Sønderjysk rugbrød">
-                        <p class="card-text mt-3">
-                           En variation af det klassiske sønderjyske rugbrød. Dette er dog ikke rundt men bagt i form og derfor firkantet - men stadig lige så saftigt og lækkert som sin runde bror.
-                        </p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Kategori: Bagværk</li>
-                    </ul>
-                    <div class="card-footer bg-success-subtle fst-italic">
-                        <p>Oprettet d. 30/8-2025 af Moster Hanne</p>
-                    </div>
-                </div>
-            </article>
-        </section>
-        <section class="row g-4 mb-5">
-            <article class="col-lg-4">
-                <div class="card h-100">
-                    <div class="card-header bg-success-subtle">
-                        <h5 class="card-title">Hvidløgsflutes</h5>
-                    </div>
-                    <div class="card-body">
-                        <img src="img/recipeHvidlogsflutes.jpg" class="card-img" alt="Hvidløgsflutes">
-                        <p class="card-text mt-3">
-                            Fantastiske hjemmelavede hvidløgsflutes baseret på opskriften fra Ibsens mad.
-                        </p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Kategori: Bagværk</li>
-                    </ul>
-                    <div class="card-footer bg-success-subtle fst-italic">
-                        <p>Oprettet d. 30/8-2025 af Moster Hanne</p>
-                    </div>
-                </div>
-            </article>
-             <article class="col-lg-4">
-                <div class="card h-100">
-                    <div class="card-header bg-success-subtle">
-                        <h5 class="card-title">Smash burger</h5>
-                    </div>
-                    <div class="card-body">
-                        <img src="img/recipeSmashBurger.jpg" class="card-img" alt="Smash burger">
-                        <p class="card-text mt-3">
-                            Med denne opskrift kan du lave den perfekte smash burger derhjemme - saftig, sprød og fuld af smag.
-                        </p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Kategori: Aftensmad</li>
-                    </ul>
-                    <div class="card-footer bg-success-subtle fst-italic">
-                        <p>Oprettet d. 22/8-2025 af Moster Hanne</p>
-                    </div>
-                </div>
-            </article>
-        </section>
+        <?php
+        for($i = 0; $i < $stmt->rowCount(); $i++) {
+            
+            if ( $i % 3 == 0) {
+                echo "<section class='row g-4 mb-4'>";
+            }
+            ?>
+
+                <article class="col-lg-4">
+                    <a href="opskrift.php?recipID=<?php echo htmlspecialchars($result[$i]['recipID']); ?>" class="card h-100">
+                        <div class="card-header bg-<?=$background;?>-subtle">
+                            <h5 class="card-title"><?php echo htmlspecialchars($result[$i]['recipName']); ?></h5>
+                        </div>
+                        <div class="card-body">
+                            <img src="img/<?php echo htmlspecialchars($result[$i]['recipImg']); ?>" class="card-img" alt="<?php echo htmlspecialchars($result[$i]['recipName']); ?>">
+                            <p class="card-text mt-3">
+                                <?php echo htmlspecialchars($result[$i]['recipShortDescr']); ?>
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <!-- Kategorien er oprettet som list-group for at få det opdelt med ramme øverst og nederst -->
+                            <li class="list-group-item">Kategori: <?php echo htmlspecialchars($result[$i]['recipCategory']); ?></li>
+                        </ul>
+                        <div class="card-footer bg-<?=$background;?>-subtle fst-italic">
+                            <p>Oprettet d. <?php echo htmlspecialchars($result[$i]['recipDate']); ?> af <?php echo htmlspecialchars($result[$i]['recipBy']); ?></p>
+                        </div>
+                    </a>
+                </article>
+
+            <?php   
+            if ( ($i + 1) % 3 == 0) {
+                echo "</section>";
+            }
+        }
+        
+        ?>
     </main>
 
     <?php require_once 'include/footer.php'; ?>
